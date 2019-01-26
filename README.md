@@ -1,4 +1,4 @@
-# xerocross.functional-util
+# xerocross.fu
 
 This is a collection of JavaScript utility functions written in a functional programming style.  I just started this.  It's still under construction.  But what _is_ here is thoroughly tested.  The code even contains mathematical proofs of correctness and internal verification that will throw errors at runtime if there is an unexpected problem.
 
@@ -22,7 +22,7 @@ This library has a rather extensive testing suite written in Jest notation.  It 
 
 ## functions
 
-This is a list of the available functions and their signatures and return types.  To use them, import the module. ``const futil = require("xerocross.functional-util");``.  Then to access a function, say "array.joinRight", you call ``futil.array.joinRight``.
+This is a list of the available functions and their signatures and return types.  To use them, import the module. ``const futil = require("xerocross.fu");``.  Then to access a function, say "array.joinRight", you call ``futil.array.joinRight``.
 
 None of these functions mutate the input data.
 
