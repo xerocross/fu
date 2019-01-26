@@ -19,6 +19,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     });
     let bubbleSortRecursion = function (arr, partitionIndex, compareFunction) {
         we.assert.that(number.isInteger(partitionIndex), "partitionIndex is an integer");
+        we.assert.that(typeof compareFunction == "function", "compareFunction is a function");
+        we.assert.that(Array.isArray(arr), "arr is an array");
         // this function should return an array that is sorted
         // for all indices >= partitionIndex
         // compute bubbleSortRecursion on partitionIndex + 1
@@ -37,6 +39,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     };
     var number = {
         isWholeNumber: function (num) {
+            we.assert.that(typeof num == "number", "num is type number");
             if (num == 0) {
                 return true;
             }
@@ -48,14 +51,19 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
             }
         },
         isInteger: function (num) {
+            we.assert.that(typeof num == "number", "num is type number");
             return this.isWholeNumber(num) || this.isWholeNumber(-num);
         }
     };
     var array = {
         clone: function (arr) {
+            we.assert.that(Array.isArray(arr), "arr is an array");
             return this.subarrayMax(arr, arr.length);
         },
         isArraysEqual: function (arr1, arr2, isEqual) {
+            we.assert.that(Array.isArray(arr1), "arr1 is an array");
+            we.assert.that(Array.isArray(arr2), "arr2 is an array");
+            we.assert.that(typeof isEqual == "function", "isEqual is a function");
             if (arr1.length != arr2.length) {
                 return false;
             }
@@ -70,6 +78,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
         },
         isSorted: function (arr, upTo, compareFunction) {
             we.assert.that(number.isInteger(upTo), "upTo is an integer");
+            we.assert.that(Array.isArray(arr), "arr is an array");
+            we.assert.that(typeof compareFunction == "function", "compareFunction is a function");
             // assume arr is sorted up to index upTo - 1;
             if (upTo <= 0) {
                 // requires no test
@@ -87,13 +97,16 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
             }
         },
         joinRight: function (arr, newValue) {
+            we.assert.that(Array.isArray(arr), "arr is an array");
             return [...arr, newValue];
         },
         joinLeft: function (arr, newValue) {
+            we.assert.that(Array.isArray(arr), "arr is an array");
             return [newValue, ...arr];
         },
         subarrayMax: function (arr, max) {
             we.assert.that(number.isInteger(max), "max is an integer");
+            we.assert.that(Array.isArray(arr), "arr is an array");
             if (max <= 0) {
                 // if max is 0, then the subarray includes nothing,
                 // so we return the empty array
@@ -120,6 +133,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
         },
         subarrayMin: function (arr, min) {
             we.assert.that(number.isInteger(min), "min is an integer");
+            we.assert.that(Array.isArray(arr), "arr is an array");
             if (min >= arr.length) {
                 return [];
                 // if min >= arr.length, then there 
@@ -139,14 +153,17 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
             }
         },
         joinTwoArrays: function (arr1, arr2) {
+            we.assert.that(Array.isArray(arr1), "arr1 is an array");
+            we.assert.that(Array.isArray(arr2), "arr2 is an array");
             return [...arr1, ...arr2];
         },
         subarray: function (arr, min, max) {
-            // indices are validated in subarrayMin and subarrayMax
+            // inputs are validated in subarrayMin and subarrayMax
             return this.subarrayMin(this.subarrayMax(arr, max), min);
         },
         replace: function (arr, index, value) {
             we.assert.that(number.isInteger(index), "index is an integer");
+            we.assert.that(Array.isArray(arr), "arr is an array");
             if (index < 0 || index >= arr.length) {
                 return this.clone(arr);
             }
@@ -155,6 +172,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
             }
         },
         swap: function (arr, i, j) {
+            we.assert.that(Array.isArray(arr), "arr is an array");
             we.assert.that(number.isInteger(i), "i is an integer");
             we.assert.that(0 <= i && i < arr.length, "0 <= i && i < arr.length");
             we.assert.that(number.isInteger(j), "j is an integer");
@@ -163,6 +181,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
         },
         bubbleUp: function (arr, bubbleIndex, compareFunction) {
             we.assert.that(number.isInteger(bubbleIndex), "bubbleIndex is an integer");
+            we.assert.that(Array.isArray(arr), "arr is an array");
+            we.assert.that(typeof compareFunction == "function", "compareFunction is a function");
             we.assert.that(bubbleIndex < arr.length && bubbleIndex >= 0, "bubbleIndex < arr.length && bubbleIndex >= 0");
             if (bubbleIndex == 0) {
                 // the greatest number between index 0 and index 0 (inclusive)
