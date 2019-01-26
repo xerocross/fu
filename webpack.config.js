@@ -3,14 +3,14 @@ const webpack = require('webpack')
 
 module.exports = [{
     entry : {
-        'functional-utility' : './src/functional-utility.js'
+        'fu' : './src/fu.js'
     },
     output : {
         globalObject : "this",
         path : path.resolve(__dirname, './dist'),
         publicPath : '/dist',
         filename : '[name].js',
-        library : "xerocross.functionalUtil",
+        library : "xerocross.FU",
         libraryTarget : "umd",
         umdNamedDefine : true
     },

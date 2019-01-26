@@ -1,12 +1,11 @@
 {
-  "name": "xerocross.functional-util",
-  "version": "1.0.1",
+  "name": "xerocross.fu",
+  "version": "1.0.0",
   "description": "",
-  "main": "dist/functional-utility.js",
+  "main": "dist/fu.js",
   "scripts": {
     "test": "yarn ts && yarn jest",
     "ts": "tsc",
-    "ts-w": "tsc src/functional-utility.ts -w",
     "build": "yarn ts && yarn webpack"
   },
   "keywords": [],
@@ -14,7 +13,7 @@
   "license": "0BSD",
   "repository": {
     "type": "git",
-    "url": " https://github.com/xerocross/xerocross.functional-util.git"
+    "url": "https://github.com/xerocross/fu.git"
   },
   "dependencies": {
     "@types/jest": "^23.3.13",
