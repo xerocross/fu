@@ -322,6 +322,35 @@ describe("number function suite", function () {
         test("empty array", function () {
             expect(FU.number.multiply([])).toBe(1);
         });
+
+        let battery = [
+            {
+                array : [3, 7, 12],
+                prod : 3 * 7 * 12
+            },
+            {
+                array : [],
+                prod : 1
+            },
+            {
+                array : [3, 3, 3, 3, 3],
+                prod : 3 * 3 * 3 * 3 * 3
+            },
+            {
+                array : [3, 3, 3, 3, 3, 3],
+                prod : 3 * 3 * 3 * 3 * 3 * 3
+            }
+        ]
+        for (let i = 0; i < battery.length; i ++) {
+            test(`valid ${battery[i].array}`, function () {
+                let res = FU.number.multiply(battery[i].array);
+                let expected = battery[i].prod
+                expect(res).toBe(expected);
+            });
+        }
+
+
+
     });
     describe('getFirstFactor', function () {
         test("valid input 15", function () {
@@ -373,6 +402,33 @@ describe("number function suite", function () {
                 let res = FU.number.getPrimeFactors(battery[i].num);
                 let expected = battery[i].factors
                 expect(FU.array.isArraysEqual(res, expected, (x:number, y:number) => x == y )).toBe(true);
+            });
+        }
+    });
+    describe('sum', function () {
+        let battery = [
+            {
+                array : [3, 7],
+                sum : 10
+            },
+            {
+                array : [],
+                sum : 0
+            },
+            {
+                array : [1, 1, 1, 1, 1],
+                sum : 5
+            },
+            {
+                array : [1, 1, 1, 1, 1, 1],
+                sum : 6
+            }
+        ]
+        for (let i = 0; i < battery.length; i ++) {
+            test(`valid ${battery[i].array}`, function () {
+                let res = FU.number.sum(battery[i].array);
+                let expected = battery[i].sum
+                expect(res).toBe(expected);
             });
         }
     });

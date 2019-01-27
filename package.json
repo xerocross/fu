@@ -5,7 +5,7 @@
   "main": "dist/fu.closed.js",
   "scripts": {
     "copyTest": "node ./copyTest.js",
-    "test": "yarn ts && yarn ts-tests && yarn jest",
+    "test": "yarn ts && yarn ts-tests && yarn jest ./src/functional-utility.test.js",
     "ts": "tsc ./src/functional-utility.ts",
     "ts-tests": "tsc ./src/functional-utility.test.ts",
     "ts-compiled-test": "tsc ./fu.test.ts",

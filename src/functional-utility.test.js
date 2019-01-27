@@ -313,6 +313,34 @@ describe("number function suite", function () {
         test("empty array", function () {
             expect(functional_utility_1["default"].number.multiply([])).toBe(1);
         });
+        var battery = [
+            {
+                array: [3, 7, 12],
+                prod: 3 * 7 * 12
+            },
+            {
+                array: [],
+                prod: 1
+            },
+            {
+                array: [3, 3, 3, 3, 3],
+                prod: 3 * 3 * 3 * 3 * 3
+            },
+            {
+                array: [3, 3, 3, 3, 3, 3],
+                prod: 3 * 3 * 3 * 3 * 3 * 3
+            }
+        ];
+        var _loop_1 = function (i) {
+            test("valid " + battery[i].array, function () {
+                var res = functional_utility_1["default"].number.multiply(battery[i].array);
+                var expected = battery[i].prod;
+                expect(res).toBe(expected);
+            });
+        };
+        for (var i = 0; i < battery.length; i++) {
+            _loop_1(i);
+        }
     });
     describe('getFirstFactor', function () {
         test("valid input 15", function () {
@@ -358,7 +386,7 @@ describe("number function suite", function () {
                 factors: [2, 2, 13, 479]
             }
         ];
-        var _loop_1 = function (i) {
+        var _loop_2 = function (i) {
             test("valid " + battery[i].num, function () {
                 var res = functional_utility_1["default"].number.getPrimeFactors(battery[i].num);
                 var expected = battery[i].factors;
@@ -366,7 +394,37 @@ describe("number function suite", function () {
             });
         };
         for (var i = 0; i < battery.length; i++) {
-            _loop_1(i);
+            _loop_2(i);
+        }
+    });
+    describe('sum', function () {
+        var battery = [
+            {
+                array: [3, 7],
+                sum: 10
+            },
+            {
+                array: [],
+                sum: 0
+            },
+            {
+                array: [1, 1, 1, 1, 1],
+                sum: 5
+            },
+            {
+                array: [1, 1, 1, 1, 1, 1],
+                sum: 6
+            }
+        ];
+        var _loop_3 = function (i) {
+            test("valid " + battery[i].array, function () {
+                var res = functional_utility_1["default"].number.sum(battery[i].array);
+                var expected = battery[i].sum;
+                expect(res).toBe(expected);
+            });
+        };
+        for (var i = 0; i < battery.length; i++) {
+            _loop_3(i);
         }
     });
 });

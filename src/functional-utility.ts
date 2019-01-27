@@ -52,6 +52,26 @@ let getFirstFactorRecursion = function (num:number, test:number) :number {
 }
 
 var number = {
+    getInterval : function (min:number, max:number) :number[] {
+        we.assert.that(number.isInteger(min), "min is an integer");
+        we.assert.that(number.isInteger(max), "max is an integer");
+        we.assert.that(min < max, "min < max");
+        if (min + 1 == max) {
+            return [min];
+        } else {
+            return array.joinRight(number.getInterval(min, max - 1), max - 1);
+        }
+    },
+    sum : function (arr:number[]) :number {
+        we.assert.that(Array.isArray(arr), "arr is an array");
+        if (1 == arr.length) {
+            return arr[0]
+        } else if (0 == arr.length) {
+            return 0;
+        }
+        let half = Math.floor(arr.length / 2);
+        return number.sum(array.subarray(arr, 0, half)) + number.sum(array.subarray(arr, half, arr.length))
+    },
     isNaturalNumber : function (num:number) :boolean {
         we.assert.that(typeof num == "number", "num is type number");
         if (num == 0) {
@@ -80,11 +100,14 @@ var number = {
         return this.isNaturalNumber(num) || this.isNaturalNumber(-num);
     },
     multiply : function (arr:number[]) :number {
-        if (arr.length == 0) {
+        we.assert.that(Array.isArray(arr), "arr is an array");
+        if (1 == arr.length) {
+            return arr[0]
+        } else if (0 == arr.length) {
             return 1;
-        } else {
-            return this.multiply(array.subarrayMax(arr, arr.length - 1)) * arr[arr.length - 1];
         }
+        let half = Math.floor(arr.length / 2);
+        return number.multiply(array.subarray(arr, 0, half)) * number.multiply(array.subarray(arr, half, arr.length))
     },
     getFirstFactor : function (num:number) {
         we.assert.that(number.isNaturalNumber(num), "num is a natural number");
@@ -98,15 +121,6 @@ var number = {
     getPrimeFactors : function (num:number) :number[] {
         return getPrimeFactorsRecursion(num, []);
     }
-    // getNextFactor : function (num:number, knownFactors:number[])  :number {
-    //     we.assert.that(number.isNaturalNumber(num), "num is a natural number");
-    //     we.assert.that(num > 0, "num > 0");
-    //     if (num <= 2) {
-    //         return num;
-    //     } else {
-    //         return num / number.multiply(knownFactors);
-    //     }
-    // }
 }
 var array = {
     clone : function (arr:any[]) :any[] {
