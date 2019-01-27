@@ -26,7 +26,13 @@ This project uses Google's Closure compiler as a final step.  It's a Java progra
 
 ## validation and testing
 
-This library has a rather extensive testing suite written in Jest notation.  It also uses WeAssert for internal validation of data.  For example, this library defines a number.isInteger function and many of the other functions use that function internally to verify input data.  These functions will throw an error at runtime if the input type is invalid. 
+This library has a rather extensive testing suite written in Jest notation.  It also uses WeAssert for internal validation of data.  For example, this library defines a number.isInteger function and many of the other functions use that function internally to verify input data.  These functions will throw an error at runtime if the input type is invalid.
+
+```yarn test``` tests the source files
+
+```yarn testCompiled``` tests the final output file
+
+Both run against the same battery of tests.
 
 ## functions
 
