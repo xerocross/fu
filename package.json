@@ -1,8 +1,8 @@
 {
   "name": "xerocross.fu",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "description": "",
-  "main": "dist/fu.js",
+  "main": "dist/fu.closed.js",
   "scripts": {
     "copyTest": "node ./copyTest.js",
     "test": "yarn ts && yarn ts-tests && yarn jest",
