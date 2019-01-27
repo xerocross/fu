@@ -16,8 +16,7 @@ var bubbleSortRecursion = function (arr, partitionIndex, compareFunction) {
     if (partitionIndex >= arr.length) {
         // the conditions require no change
         return array.clone(arr);
-    }
-    else {
+    } else {
         var innerArray = bubbleSortRecursion(arr, partitionIndex + 1, compareFunction);
         // now innerArray is sorted for indices >= partitionIndex + 1;
         // to put the correct value in place at index partitionIndex
@@ -33,8 +32,7 @@ var getPrimeFactorsRecursion = function (num, knownFactors) {
     var returnvalue;
     if (mult == num) {
         returnvalue = array.clone(knownFactors);
-    }
-    else {
+    } else {
         var test_1 = num / mult;
         var factor = number.getFirstFactor(test_1);
         returnvalue = getPrimeFactorsRecursion(num, array.joinRight(knownFactors, factor));
@@ -44,39 +42,36 @@ var getPrimeFactorsRecursion = function (num, knownFactors) {
 var getFirstFactorRecursion = function (num, test) {
     if (num % test == 0) {
         return test;
-    }
-    else {
+    } else {
         return getFirstFactorRecursion(num, test + 1);
     }
 };
 var number = {
-    getInterval: function (min, max) {
+    getInterval : function (min, max) {
         we.assert.that(number.isInteger(min), "min is an integer");
         we.assert.that(number.isInteger(max), "max is an integer");
         we.assert.that(min < max, "min < max");
         if (min + 1 == max) {
             return [min];
-        }
-        else {
+        } else {
             return array.joinRight(number.getInterval(min, max - 1), max - 1);
         }
     },
-    sum: function (arr) {
+    sum : function (arr) {
+        we.assert.that(Array.isArray(arr), "arr is an array");
         if (1 == arr.length) {
             return arr[0];
-        }
-        else if (0 == arr.length) {
+        } else if (0 == arr.length) {
             return 0;
         }
         var half = Math.floor(arr.length / 2);
         return number.sum(array.subarray(arr, 0, half)) + number.sum(array.subarray(arr, half, arr.length));
     },
-    isNaturalNumber: function (num) {
+    isNaturalNumber : function (num) {
         we.assert.that(typeof num == "number", "num is type number");
         if (num == 0) {
             return true;
-        }
-        else if (num > 0) {
+        } else if (num > 0) {
             // javascript numbers should be < 9007199254740991
             we.assert.that(num < 9007199254740991, "num is not larger than 9007199254740991");
             if (num > 100) {
@@ -87,56 +82,52 @@ var number = {
                     i++;
                 }
                 return this.isNaturalNumber(num);
-            }
-            else {
+            } else {
                 return this.isNaturalNumber(num - 1);
             }
-        }
-        else {
+        } else {
             return false;
         }
     },
-    isInteger: function (num) {
+    isInteger : function (num) {
         we.assert.that(typeof num == "number", "num is type number");
         return this.isNaturalNumber(num) || this.isNaturalNumber(-num);
     },
-    multiply: function (arr) {
+    multiply : function (arr) {
+        we.assert.that(Array.isArray(arr), "arr is an array");
         if (1 == arr.length) {
             return arr[0];
-        }
-        else if (0 == arr.length) {
+        } else if (0 == arr.length) {
             return 1;
         }
         var half = Math.floor(arr.length / 2);
         return number.multiply(array.subarray(arr, 0, half)) * number.multiply(array.subarray(arr, half, arr.length));
     },
-    getFirstFactor: function (num) {
+    getFirstFactor : function (num) {
         we.assert.that(number.isNaturalNumber(num), "num is a natural number");
         we.assert.that(num > 0, "num > 0");
         if (num <= 2) {
             return num;
-        }
-        else {
+        } else {
             return getFirstFactorRecursion(num, 2);
         }
     },
-    getPrimeFactors: function (num) {
+    getPrimeFactors : function (num) {
         return getPrimeFactorsRecursion(num, []);
     }
 };
 var array = {
-    clone: function (arr) {
+    clone : function (arr) {
         we.assert.that(Array.isArray(arr), "arr is an array");
         return this.subarrayMax(arr, arr.length);
     },
-    isArraysEqual: function (arr1, arr2, isEqual) {
+    isArraysEqual : function (arr1, arr2, isEqual) {
         we.assert.that(Array.isArray(arr1), "arr1 is an array");
         we.assert.that(Array.isArray(arr2), "arr2 is an array");
         we.assert.that(typeof isEqual == "function", "isEqual is a function");
         if (arr1.length != arr2.length) {
             return false;
-        }
-        else {
+        } else {
             for (var i = 0; i < arr1.length; i++) {
                 if (!isEqual(arr1[i], arr2[i])) {
                     return false;
@@ -145,7 +136,7 @@ var array = {
             return true;
         }
     },
-    isSorted: function (arr, upTo, compareFunction) {
+    isSorted : function (arr, upTo, compareFunction) {
         we.assert.that(number.isInteger(upTo), "upTo is an integer");
         we.assert.that(Array.isArray(arr), "arr is an array");
         we.assert.that(typeof compareFunction == "function", "compareFunction is a function");
@@ -153,27 +144,25 @@ var array = {
         if (upTo <= 0) {
             // requires no test
             return true;
-        }
-        else {
+        } else {
             // assume arr is sorted up to index upTo - 1;
             var innerTest = array.isSorted(arr, upTo - 1, compareFunction);
             if (upTo < arr.length) {
                 return innerTest && compareFunction(arr[upTo - 1], arr[upTo]) <= 0;
-            }
-            else {
+            } else {
                 return innerTest;
             }
         }
     },
-    joinRight: function (arr, newValue) {
+    joinRight : function (arr, newValue) {
         we.assert.that(Array.isArray(arr), "arr is an array");
         return arr.concat([newValue]);
     },
-    joinLeft: function (arr, newValue) {
+    joinLeft : function (arr, newValue) {
         we.assert.that(Array.isArray(arr), "arr is an array");
         return [newValue].concat(arr);
     },
-    subarrayMax: function (arr, max) {
+    subarrayMax : function (arr, max) {
         we.assert.that(number.isInteger(max), "max is an integer");
         we.assert.that(Array.isArray(arr), "arr is an array");
         we.assert.that(max >= 0 && max <= arr.length, "max >= 0 && max <= arr.length");
@@ -182,8 +171,7 @@ var array = {
             // so we return the empty array
             // this is the base case for mathematical induction
             return [];
-        }
-        else {
+        } else {
             // else max > 0.  Assume we have computed 
             // the subarray for max - 1.  
             var lesserSubarray = this.subarrayMax(arr, max - 1);
@@ -201,7 +189,7 @@ var array = {
             return subarray;
         }
     },
-    subarrayMin: function (arr, min) {
+    subarrayMin : function (arr, min) {
         we.assert.that(number.isInteger(min), "min is an integer");
         we.assert.that(min >= 0 && min < arr.length + 1, "min >= 0 && min < arr.length + 1");
         we.assert.that(Array.isArray(arr), "arr is an array");
@@ -211,8 +199,7 @@ var array = {
             // are no indexes greater than or equal to min,
             // so we return an empty array.
             // This is the base case.
-        }
-        else {
+        } else {
             // Else assume we have computed the 
             // correct array for this.subarrayMin(arr, min + 1)
             var lesserSubarray = this.subarrayMin(arr, min + 1);
@@ -230,27 +217,26 @@ var array = {
             // indices.
         }
     },
-    joinTwoArrays: function (arr1, arr2) {
+    joinTwoArrays : function (arr1, arr2) {
         we.assert.that(Array.isArray(arr1), "arr1 is an array");
         we.assert.that(Array.isArray(arr2), "arr2 is an array");
         return arr1.concat(arr2);
     },
-    subarray: function (arr, min, max) {
+    subarray : function (arr, min, max) {
         // inputs are validated in subarrayMin and subarrayMax
         return this.subarrayMin(this.subarrayMax(arr, max), min);
     },
-    replace: function (arr, index, value) {
+    replace : function (arr, index, value) {
         we.assert.that(number.isInteger(index), "index is an integer");
         we.assert.that(Array.isArray(arr), "arr is an array");
         we.assert.that(index >= 0 && index < arr.length, "index >= 0 && index < arr.length");
         if (index < 0 || index >= arr.length) {
             return this.clone(arr);
-        }
-        else {
+        } else {
             return this.joinTwoArrays(this.joinRight(this.subarrayMax(arr, index), value), this.subarray(arr, index + 1, arr.length));
         }
     },
-    swap: function (arr, i, j) {
+    swap : function (arr, i, j) {
         we.assert.that(Array.isArray(arr), "arr is an array");
         we.assert.that(number.isInteger(i), "i is an integer");
         we.assert.that(0 <= i && i < arr.length, "0 <= i && i < arr.length");
@@ -258,7 +244,7 @@ var array = {
         we.assert.that(0 <= j && j < arr.length, "0 <= j && j < arr.length");
         return this.replace(this.replace(arr, i, arr[j]), j, arr[i]);
     },
-    bubbleUp: function (arr, bubbleIndex, compareFunction) {
+    bubbleUp : function (arr, bubbleIndex, compareFunction) {
         we.assert.that(number.isInteger(bubbleIndex), "bubbleIndex is an integer");
         we.assert.that(Array.isArray(arr), "arr is an array");
         we.assert.that(typeof compareFunction == "function", "compareFunction is a function");
@@ -267,8 +253,7 @@ var array = {
             // the greatest number between index 0 and index 0 (inclusive)
             // is already in place, so we return a clone of the array
             return this.clone(arr);
-        }
-        else {
+        } else {
             // assume we have bubbled up the array so that 
             // the value at index bubbleIndex - 1 is the max
             // over all indices between 0 and bubbleIndex - 1, inclusive
@@ -277,8 +262,7 @@ var array = {
             if (comparison <= 0) {
                 // then lesserBubbledArray is already bubbled to index bubbleIndex
                 return lesserBubbledArray;
-            }
-            else {
+            } else {
                 // we swap them.  Since lesserBubbledArray[bubbleIndex - 1] is 
                 // greater than everything from 0 to bubbleIndex - 1
                 // and since it is also greater than lesserBubbledArray[bubbleIndex]
@@ -289,11 +273,11 @@ var array = {
             }
         }
     },
-    bubbleSort: function (arr, compareFunction) {
+    bubbleSort : function (arr, compareFunction) {
         return bubbleSortRecursion(arr, 0, compareFunction);
     }
 };
 exports["default"] = {
-    array: array,
-    number: number
+    array : array,
+    number : number
 };

@@ -7,9 +7,10 @@
     "copyTest": "node ./copyTest.js",
     "test": "yarn ts && yarn ts-tests && yarn jest ./src/functional-utility.test.js",
     "ts": "tsc ./src/functional-utility.ts",
-    "ts-tests": "tsc ./src/functional-utility.test.ts",
+    "ts-tests": "tsc ./src/functional-utility.test.ts && yarn format",
     "ts-compiled-test": "tsc ./fu.test.ts",
-    "build": "yarn ts && yarn webpack && yarn close",
+    "build": "yarn ts && yarn format && yarn webpack && yarn close",
+    "format" : "yarn eslint --fix ./src",
     "close": "java -jar closure-compiler-v20190121.jar --js ./dist/fu.js --js_output_file ./dist/fu.closed.js",
     "testCompiled": "yarn ts-tests && yarn copyTest && yarn ts-compiled-test && yarn jest ./fu.test.js"
   },

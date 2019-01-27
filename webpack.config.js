@@ -14,31 +14,23 @@ module.exports = [{
         libraryTarget : "umd",
         umdNamedDefine : true
     },
-    externals : {
-    },
     module : {
         rules : [
             {
                 test : /\.m?js$/,
                 exclude : /(node_modules|bower_components)/,
                 use : {
-                    loader : 'babel-loader',
+                    loader : 'babel-loader'
                 }
             }
         ]
     },
     optimization : {
-        minimize : true
+        minimize : false
     },
     plugins : [
         new webpack.DefinePlugin({
             'NODE_ENV' : JSON.stringify(process.env.NODE_ENV)
         })
-    ],
-    devServer : {
-        contentBase : "./public",
-        compress : true,
-        port : 9000,
-        watchContentBase : true
-    }
-},]
+    ]
+}]

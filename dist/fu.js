@@ -1,1 +1,395 @@
-!function(t,r){"object"==typeof exports&&"object"==typeof module?module.exports=r():"function"==typeof define&&define.amd?define("xerocross.FU",[],r):"object"==typeof exports?exports["xerocross.FU"]=r():t["xerocross.FU"]=r()}(this,function(){return function(t){var r={};function n(e){if(r[e])return r[e].exports;var a=r[e]={i:e,l:!1,exports:{}};return t[e].call(a.exports,a,a.exports,n),a.l=!0,a.exports}return n.m=t,n.c=r,n.d=function(t,r,e){n.o(t,r)||Object.defineProperty(t,r,{enumerable:!0,get:e})},n.r=function(t){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(t,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(t,"__esModule",{value:!0})},n.t=function(t,r){if(1&r&&(t=n(t)),8&r)return t;if(4&r&&"object"==typeof t&&t&&t.__esModule)return t;var e=Object.create(null);if(n.r(e),Object.defineProperty(e,"default",{enumerable:!0,value:t}),2&r&&"string"!=typeof t)for(var a in t)n.d(e,a,function(r){return t[r]}.bind(null,a));return e},n.n=function(t){var r=t&&t.__esModule?function(){return t.default}:function(){return t};return n.d(r,"a",r),r},n.o=function(t,r){return Object.prototype.hasOwnProperty.call(t,r)},n.p="/dist",n(n.s=0)}([function(t,r,n){"use strict";r.__esModule=!0;var e=n(1).default.build();e.setHandler(function(t){throw new Error("the following assertion failed: "+t+'"')});var a={getInterval:function(t,r){return e.assert.that(a.isInteger(t),"min is an integer"),e.assert.that(a.isInteger(r),"max is an integer"),e.assert.that(t<r,"min < max"),t+1==r?[t]:i.joinRight(a.getInterval(t,r-1),r-1)},sum:function(t){if(1==t.length)return t[0];if(0==t.length)return 0;var r=Math.floor(t.length/2);return a.sum(i.subarray(t,0,r))+a.sum(i.subarray(t,r,t.length))},isNaturalNumber:function(t){if(e.assert.that("number"==typeof t,"num is type number"),0==t)return!0;if(t>0){if(e.assert.that(t<9007199254740991,"num is not larger than 9007199254740991"),t>100){for(var r=1,n=void 0;t>(n=Math.pow(10,r));)t-=n,r++;return this.isNaturalNumber(t)}return this.isNaturalNumber(t-1)}return!1},isInteger:function(t){return e.assert.that("number"==typeof t,"num is type number"),this.isNaturalNumber(t)||this.isNaturalNumber(-t)},multiply:function(t){if(1==t.length)return t[0];if(0==t.length)return 1;var r=Math.floor(t.length/2);return a.multiply(i.subarray(t,0,r))*a.multiply(i.subarray(t,r,t.length))},getFirstFactor:function(t){return e.assert.that(a.isNaturalNumber(t),"num is a natural number"),e.assert.that(t>0,"num > 0"),t<=2?t:function t(r,n){return r%n==0?n:t(r,n+1)}(t,2)},getPrimeFactors:function(t){return function t(r,n){e.assert.that(a.isNaturalNumber(r),"num is a natural number"),e.assert.that(Array.isArray(n),"knownFactors is an array"),e.assert.that(r>0,"num > 0");var o,s=a.multiply(n);if(s==r)o=i.clone(n);else{var u=r/s,c=a.getFirstFactor(u);o=t(r,i.joinRight(n,c))}return o}(t,[])}},i={clone:function(t){return e.assert.that(Array.isArray(t),"arr is an array"),this.subarrayMax(t,t.length)},isArraysEqual:function(t,r,n){if(e.assert.that(Array.isArray(t),"arr1 is an array"),e.assert.that(Array.isArray(r),"arr2 is an array"),e.assert.that("function"==typeof n,"isEqual is a function"),t.length!=r.length)return!1;for(var a=0;a<t.length;a++)if(!n(t[a],r[a]))return!1;return!0},isSorted:function(t,r,n){if(e.assert.that(a.isInteger(r),"upTo is an integer"),e.assert.that(Array.isArray(t),"arr is an array"),e.assert.that("function"==typeof n,"compareFunction is a function"),r<=0)return!0;var o=i.isSorted(t,r-1,n);return r<t.length?o&&n(t[r-1],t[r])<=0:o},joinRight:function(t,r){return e.assert.that(Array.isArray(t),"arr is an array"),t.concat([r])},joinLeft:function(t,r){return e.assert.that(Array.isArray(t),"arr is an array"),[r].concat(t)},subarrayMax:function(t,r){if(e.assert.that(a.isInteger(r),"max is an integer"),e.assert.that(Array.isArray(t),"arr is an array"),e.assert.that(r>=0&&r<=t.length,"max >= 0 && max <= arr.length"),r<=0)return[];var n=this.subarrayMax(t,r-1);return r-1<t.length?i.joinRight(n,t[r-1]):n},subarrayMin:function(t,r){if(e.assert.that(a.isInteger(r),"min is an integer"),e.assert.that(r>=0&&r<t.length+1,"min >= 0 && min < arr.length + 1"),e.assert.that(Array.isArray(t),"arr is an array"),r==t.length)return[];var n=this.subarrayMin(t,r+1);return r>=0?this.joinLeft(n,t[r]):n},joinTwoArrays:function(t,r){return e.assert.that(Array.isArray(t),"arr1 is an array"),e.assert.that(Array.isArray(r),"arr2 is an array"),t.concat(r)},subarray:function(t,r,n){return this.subarrayMin(this.subarrayMax(t,n),r)},replace:function(t,r,n){return e.assert.that(a.isInteger(r),"index is an integer"),e.assert.that(Array.isArray(t),"arr is an array"),e.assert.that(r>=0&&r<t.length,"index >= 0 && index < arr.length"),r<0||r>=t.length?this.clone(t):this.joinTwoArrays(this.joinRight(this.subarrayMax(t,r),n),this.subarray(t,r+1,t.length))},swap:function(t,r,n){return e.assert.that(Array.isArray(t),"arr is an array"),e.assert.that(a.isInteger(r),"i is an integer"),e.assert.that(0<=r&&r<t.length,"0 <= i && i < arr.length"),e.assert.that(a.isInteger(n),"j is an integer"),e.assert.that(0<=n&&n<t.length,"0 <= j && j < arr.length"),this.replace(this.replace(t,r,t[n]),n,t[r])},bubbleUp:function(t,r,n){if(e.assert.that(a.isInteger(r),"bubbleIndex is an integer"),e.assert.that(Array.isArray(t),"arr is an array"),e.assert.that("function"==typeof n,"compareFunction is a function"),e.assert.that(r<t.length&&r>=0,"bubbleIndex < arr.length && bubbleIndex >= 0"),0==r)return this.clone(t);var i=this.bubbleUp(t,r-1,n);return n(i[r-1],i[r])<=0?i:this.swap(i,r-1,r)},bubbleSort:function(t,r){return function t(r,n,o){if(e.assert.that(a.isInteger(n),"partitionIndex is an integer"),e.assert.that("function"==typeof o,"compareFunction is a function"),e.assert.that(Array.isArray(r),"arr is an array"),n>=r.length)return i.clone(r);var s=t(r,n+1,o);return i.bubbleUp(s,n,o)}(t,0,r)}};r.default={array:i,number:a}},function(t,r,n){t.exports=function(t){var r={};function n(e){if(r[e])return r[e].exports;var a=r[e]={i:e,l:!1,exports:{}};return t[e].call(a.exports,a,a.exports,n),a.l=!0,a.exports}return n.m=t,n.c=r,n.d=function(t,r,e){n.o(t,r)||Object.defineProperty(t,r,{enumerable:!0,get:e})},n.r=function(t){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(t,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(t,"__esModule",{value:!0})},n.t=function(t,r){if(1&r&&(t=n(t)),8&r)return t;if(4&r&&"object"==typeof t&&t&&t.__esModule)return t;var e=Object.create(null);if(n.r(e),Object.defineProperty(e,"default",{enumerable:!0,value:t}),2&r&&"string"!=typeof t)for(var a in t)n.d(e,a,function(r){return t[r]}.bind(null,a));return e},n.n=function(t){var r=t&&t.__esModule?function(){return t.default}:function(){return t};return n.d(r,"a",r),r},n.o=function(t,r){return Object.prototype.hasOwnProperty.call(t,r)},n.p="/",n(n.s=2)}([function(t,r,n){"use strict";const e=n(3),a=n(1);function i(t){let r=[],n=function(t){t&&("negation"!=t.action||"substitution"!=t.args[0].action?"substitution"!=t.action?(n(t.args[0]),n(t.args[1])):r.push(t.args[0]):r.push("!"+t.args[0].args[0]))};return n(t),r}function o(t,r){let n=i(t),e=i(r),o=function(t,r){let n=[];return t.forEach(function(t){let e=t.startsWith("!")?t.substring(1):t,a=t.startsWith("!")?t.substring(1):"!"+t;r.includes(a)&&n.push(e)}),n}(n,e);if(o.length>1)return{action:"literal",args:[!0]};let s=n.concat(e);return s.sort(),0==(s=s.filter(function(t){let r=t.startsWith("!")?t.substring(1):t;return!o.includes(r)}).reduce(function(t,r){return t.peek()==r?t:t.concat([r])},[])).length?{action:"literal",args:[!1]}:a.buildTree(s.join(" | "))}t.exports.prove=function(t,r){let n=[],i=[],s=0;t.forEach(function(t){let r=e.convertToCNF(a.buildTree(t)).map(function(t){return t.idx=s++,t});i=i.concat(r),n.push(i)});let u=s,c=n.map(function(t){let r=t.peek();return r}).map(function(t){let r=e.splitClauses(t.tree).map(function(r){return r.idx=s++,r.from=t.idx,r});return r}).reduce(function(t,r){return t.concat(r)},[]);c.forEach(function(t){i.push({label:"knowledge base clause from "+t.from,tree:t,idx:t.idx})});let f=e.convertToCNF(a.negate(a.buildTree(r)));f.peek().tree,e.splitClauses(f.peek().tree).forEach(function(t){t.idx=s++,c.push(t),i.push({label:"assume for a contradiction",tree:c.peek(),idx:c.peek().idx})});let l=function(t){let r=[t],n=i.filter(function(r){return r.idx==t})[0];return n.req?(n.req.forEach(function(t){r=r.concat(l(t))}),r):r};for(;;){let t=[];for(let r=0;r<c.length;r++)for(let n=1;n<c.length;n++){let e=o(c[r],c[n]);if(!t.map(a.treeToExpr).includes(a.treeToExpr(e))){if(e.idx=s++,i.push({label:"resolve of "+c[r].idx+" and "+c[n].idx,tree:e,idx:e.idx,req:[c[r].idx,c[n].idx]}),"literal"==e.action&&0==e.args[0]){let t=l(e.idx);return i.filter(function(r){return t.includes(r.idx)||r.idx<=u||"sep"==r.label}).map(function(t){return t.tree&&(t.tree=a.treeToExpr(t.tree)),t})}"literal"==e.action&&1==e.args[0]||t.push(e)}}let r=c.map(a.treeToExpr),n=t.map(a.treeToExpr).every(function(t){return r.includes(t)});if(n)return i.push({label:"model exhausted, proof could not be reached"}),i.map(function(t){return t.tree&&(t.tree=a.treeToExpr(t.tree)),t});c=c.concat(t)}},t.exports.addParens=function(t){return a.treeToExpr(a.buildTree(t))},t.exports.isProofComplete=function(t){return"model exhausted, proof could not be reached"!=t.peek().label}},function(t,r,n){"use strict";const e=n(4),a=n(5);function i(t){return t&&"substitution"!=t.action&&"literal"!=t.action?null==t.action?i(t.args[0]):{action:t.action,args:t.args.map(i)}:t}Array.prototype.peek=function(){return this[this.length-1]},Array.prototype.includes||(Array.prototype.includes=function(t){var r=Object(this),n=parseInt(r.length)||0;if(0===n)return!1;var e,a,i=parseInt(arguments[1])||0;for(i>=0?e=i:(e=n+i)<0&&(e=0);e<n;){if(t===(a=r[e])||t!=t&&a!=a)return!0;e++}return!1}),String.prototype.startsWith||(String.prototype.startsWith=function(t,r){return r=r||0,this.indexOf(t,r)===r}),t.exports.negate=function(t){return{action:"negation",args:[t]}},t.exports.treeToExpr=function t(r){return"substitution"==r.action?r.args[0]:"literal"==r.action?r.args[0]:"negation"==r.action?"substitution"==r.args[0].action?"!"+r.args[0].args[0]:"(!"+t(r.args[0])+")":"conjunction"==r.action?"("+t(r.args[0])+" & "+t(r.args[1])+")":"disjunction"==r.action?"("+t(r.args[0])+" | "+t(r.args[1])+")":"implication"==r.action?"("+t(r.args[0])+" -> "+t(r.args[1])+")":"equivalence"==r.action?"("+t(r.args[0])+" <-> "+t(r.args[1])+")":""},t.exports.proofToString=function(t){return(t=t.map(function(t){return"sep"==t.label?"------------------------------\n":t.tree?t.idx+"\t"+t.tree+"\t"+t.label+"\n":t.label+"\n"})).join("")},t.exports.buildTree=function(t){return i(e.parse(a.lex(t)))}},function(t,r,n){"use strict";n.r(r);var e=n(0),a=n.n(e),i={0:"DEBUG",1:"WARN",2:"ERROR"},o=function(t){switch(t){case"DEBUG":return 0;case"WARN":return 1;case"ERROR":return 2}};r.default={build:function(){let t={};var r=function(){};let n=2,e={},s=[];return t.define=function(t){return e[t]},t.assume=function(t){s.push(t)},t.setLevel=function(t){var r=o(t);if(0!=r&&1!=r&&2!=r)throw new Error("we-assert: invalid error level");n=r},t.getLevel=function(){return i[n]},t.checkIsProved=function(t){var r=a.a.prove(s,t);return a.a.isProofComplete(r)},t.getProposition=function(t){return e[t]},t.setHandler=function(t){r=t},t.defineProposition=function(t,r){e[t]=r},t.assert={that:function(t,n){return t||r(n),1==t},proposition:function(r,n){t.defineProposition(r,n);let e=n[0],a=n[1],i=n[2],o=e(...a);return o&&s.push(r),this.that(o,i)},thatIsProved:function(n,e){let a=t.checkIsProved(n);return a||r(e),a},forXBetween:function(t,r){let n={};var e=this.that;return n.that=function(n,a){for(let i=t;i<r;i++)e(n(i),a)},n},atLevel:function(t){var r={},e=this.that;return r.that=function(r,a){o(t)>=n&&e(r,a)},r}},t}}},function(t,r,n){"use strict";const e=n(1);function a(t,r){return{action:"conjunction",args:[t,r]}}function i(t,r){return{action:"implication",args:[t,r]}}function o(t){return{action:"negation",args:[t]}}function s(t,r){return{action:"disjunction",args:[t,r]}}function u(t){return t&&"substitution"!=t.action&&"literal"!=t.action?"equivalence"==t.action?a(i(u(t.args[0]),u(t.args[1])),i(u(t.args[1]),u(t.args[0]))):{action:t.action,args:t.args.map(u)}:t}function c(t){if(!t||"substitution"==t.action||"literal"==t.action)return t;if("negation"==t.action){if("disjunction"==t.args[0].action)return c(a(o(t.args[0].args[0]),o(t.args[0].args[1])));if("conjunction"==t.args[0].action)return c(s(o(t.args[0].args[0]),o(t.args[0].args[1])))}return{action:t.action,args:t.args.map(c)}}function f(t){return t&&"substitution"!=t.action&&"literal"!=t.action?"implication"==t.action?s(o(f(t.args[0])),f(t.args[1])):{action:t.action,args:t.args.map(f)}:t}function l(t){return t&&"substitution"!=t.action&&"literal"!=t.action?"negation"==t.action&&"negation"==t.args[0].action?l(t.args[0].args[0]):{action:t.action,args:t.args.map(l)}:t}function g(t){return JSON.parse(JSON.stringify(t))}function p(t){if(!t||"substitution"==t.action||"literal"==t.action)return t;if("disjunction"==t.action){if("conjunction"==t.args[1].action)return p(a(s(g(t.args[0]),g(t.args[1].args[0])),s(g(t.args[0]),g(t.args[1].args[1]))));if("conjunction"==t.args[0].action)return p(a(s(g(t.args[1]),g(t.args[0].args[0])),s(g(t.args[1]),g(t.args[0].args[1]))))}return{action:t.action,args:t.args.map(p)}}function h(t){if(!t||"substitution"==t.action||"literal"==t.action)return t;if("disjunction"==t.action){var r=t.args[0],n=t.args[1];if("negation"==r.action&&e.treeToExpr(r.args[0])==e.treeToExpr(n))return{action:"literal",args:[!0]};if("negation"==n.action&&e.treeToExpr(n.args[0])==e.treeToExpr(r))return{action:"literal",args:[!0]}}if("conjunction"==t.action){if(r=t.args[0],n=t.args[1],"negation"==r.args[0].action&&e.treeToExpr(r.args[0].args[0])==e.treeToExpr(n))return{action:"literal",args:[!1]};if("negation"==n.args[0].action&&e.treeToExpr(n.args[0].args[0])==e.treeToExpr(r))return{action:"literal",args:[!1]}}return{action:t.action,args:t.args.map(h)}}function d(t){if(!t||"substitution"==t.action||"literal"==t.action)return t;if("disjunction"==t.action){var r=t.args[0],n=t.args[1];if("literal"==r.action){if(1==r.args[0])return r;if(0==r.args[0])return n}if("literal"==n.action){if(1==n.args[0])return n;if(0==n.args[0])return r}}if("conjunction"==t.action){if(r=t.args[0],n=t.args[1],"literal"==r.action){if(1==r.args[0])return n;if(0==r.args[0])return r}if("literal"==n.action){if(1==n.args[0])return r;if(0==n.args[0])return n}}return{action:t.action,args:t.args.map(d)}}function b(t){var r=function(t){return!(t.args.length<2)&&"implication"!=t.action&&"equivalence"!=t.action&&"disjunction"!=t.action&&(e="conjunction"==t.args[0].action?r(t.args[0]):n(t.args[0]),"conjunction"==t.args[1].action?r(t.args[1])&&e:n(t.args[1])&&e);var e},n=function(t){return!!t&&("substitution"==t.action||"literal"==t.action||"conjunction"!=t.action&&("negation"==t.action?"substitution"==t.args[0].action:"disjunction"==t.action&&n(t.args[0]&&t.args[1])))};return"substitution"==t.action||"negation"==t.action&&"substitution"==t.args[0].action||r(t)}t.exports.convertToCNF=function(t){var r=[{task:"eliminate bijection",f:u},{task:"eliminate implication",f:f},{task:"DeMorgan's",f:c},{task:"eliminate double negation",f:l},{task:"distribute or over and",f:p},{task:"complementation",f:h},{task:"identity",f:d}],n=[{label:"initial expression",tree:t}];for(let t of r){if(b(n.peek().tree))break;for(;;){var a=t.f(n.peek().tree);if(e.treeToExpr(a)==e.treeToExpr(n.peek().tree))break;n.push({label:t.task,tree:a})}}return n},t.exports.isCNF=b,t.exports.splitClauses=function(t){var r=[],n=function(t){if("conjunction"==t.action)return n(t.args[0]),void n(t.args[1]);r.push(t)};return n(t),r}},function(t,r){t.exports.parse=function(t){var r;return function a(i){i=i||null;for(var o=[];r=t.shift();)if("boundary"==r.type){if("("==r.value)o.push(a());else if(")"==r.value)return n(i,o)}else if("variable"==r.type){if(o.push(n("substitution",[r.value])),e(i))return n(i,o)}else if("operator"==r.type){if(e(r.value)){o.push(a(r.value));continue}if(i){var s=o.slice(0);(o=[]).push(n(i,s))}i=r.value}return n(i,o)}();function n(t,r){return{action:(n=t,{"!":"negation","|":"disjunction","&":"conjunction","->":"implication","<->":"equivalence"}[n]||n),args:r};var n}function e(t){return"!"===t}}},function(t,r){t.exports.lex=function(t){for(var r,n=0,e=[],a="";r=t[n++];)if(u(r))-1!==["!","|","&","->","<->"].indexOf(a+=r)&&(i("operator",a),a="");else{if(a.length&&f(a,n-a.length-1),o(r))continue;s(r)?i("variable",r.toUpperCase()):c(r)?i("boundary",r):f(r,n-2)}return e;function i(t,r){e.push({type:t,value:r})}function o(t){return/\s/.test(t)}function s(t){return/[A-Za-z]/.test(t)}function u(t){return/[<>\-|&!]/.test(t)}function c(t){return/[\(\)]/.test(t)}function f(t,r){throw new Error('Unrecognized token "'+t+'" on position '+r+"!")}}}])}])});
+(function webpackUniversalModuleDefinition(root, factory) {
+	if(typeof exports === 'object' && typeof module === 'object')
+		module.exports = factory();
+	else if(typeof define === 'function' && define.amd)
+		define("xerocross.FU", [], factory);
+	else if(typeof exports === 'object')
+		exports["xerocross.FU"] = factory();
+	else
+		root["xerocross.FU"] = factory();
+})(this, function() {
+return /******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// define __esModule on exports
+/******/ 	__webpack_require__.r = function(exports) {
+/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 		}
+/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 	};
+/******/
+/******/ 	// create a fake namespace object
+/******/ 	// mode & 1: value is a module id, require it
+/******/ 	// mode & 2: merge all properties of value into the ns
+/******/ 	// mode & 4: return value when already ns object
+/******/ 	// mode & 8|1: behave like require
+/******/ 	__webpack_require__.t = function(value, mode) {
+/******/ 		if(mode & 1) value = __webpack_require__(value);
+/******/ 		if(mode & 8) return value;
+/******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
+/******/ 		var ns = Object.create(null);
+/******/ 		__webpack_require__.r(ns);
+/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
+/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
+/******/ 		return ns;
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "/dist";
+/******/
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = 0);
+/******/ })
+/************************************************************************/
+/******/ ([
+/* 0 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+var we_assert_1 = __webpack_require__(1);
+var we = we_assert_1["default"].build();
+we.setHandler(function (message) {
+    throw new Error("the following assertion failed: " + message + "\"");
+});
+var bubbleSortRecursion = function bubbleSortRecursion(arr, partitionIndex, compareFunction) {
+    we.assert.that(number.isInteger(partitionIndex), "partitionIndex is an integer");
+    we.assert.that(typeof compareFunction == "function", "compareFunction is a function");
+    we.assert.that(Array.isArray(arr), "arr is an array");
+    // this function should return an array that is sorted
+    // for all indices >= partitionIndex
+    // compute bubbleSortRecursion on partitionIndex + 1
+    // so we have 
+    if (partitionIndex >= arr.length) {
+        // the conditions require no change
+        return array.clone(arr);
+    } else {
+        var innerArray = bubbleSortRecursion(arr, partitionIndex + 1, compareFunction);
+        // now innerArray is sorted for indices >= partitionIndex + 1;
+        // to put the correct value in place at index partitionIndex
+        // we just need to bubbleUp at that index
+        return array.bubbleUp(innerArray, partitionIndex, compareFunction);
+    }
+};
+var getPrimeFactorsRecursion = function getPrimeFactorsRecursion(num, knownFactors) {
+    we.assert.that(number.isNaturalNumber(num), "num is a natural number");
+    we.assert.that(Array.isArray(knownFactors), "knownFactors is an array");
+    we.assert.that(num > 0, "num > 0");
+    var mult = number.multiply(knownFactors);
+    var returnvalue;
+    if (mult == num) {
+        returnvalue = array.clone(knownFactors);
+    } else {
+        var test_1 = num / mult;
+        var factor = number.getFirstFactor(test_1);
+        returnvalue = getPrimeFactorsRecursion(num, array.joinRight(knownFactors, factor));
+    }
+    return returnvalue;
+};
+var getFirstFactorRecursion = function getFirstFactorRecursion(num, test) {
+    if (num % test == 0) {
+        return test;
+    } else {
+        return getFirstFactorRecursion(num, test + 1);
+    }
+};
+var number = {
+    getInterval: function getInterval(min, max) {
+        we.assert.that(number.isInteger(min), "min is an integer");
+        we.assert.that(number.isInteger(max), "max is an integer");
+        we.assert.that(min < max, "min < max");
+        if (min + 1 == max) {
+            return [min];
+        } else {
+            return array.joinRight(number.getInterval(min, max - 1), max - 1);
+        }
+    },
+    sum: function sum(arr) {
+        we.assert.that(Array.isArray(arr), "arr is an array");
+        if (1 == arr.length) {
+            return arr[0];
+        } else if (0 == arr.length) {
+            return 0;
+        }
+        var half = Math.floor(arr.length / 2);
+        return number.sum(array.subarray(arr, 0, half)) + number.sum(array.subarray(arr, half, arr.length));
+    },
+    isNaturalNumber: function isNaturalNumber(num) {
+        we.assert.that(typeof num == "number", "num is type number");
+        if (num == 0) {
+            return true;
+        } else if (num > 0) {
+            // javascript numbers should be < 9007199254740991
+            we.assert.that(num < 9007199254740991, "num is not larger than 9007199254740991");
+            if (num > 100) {
+                var i = 1;
+                var exp = void 0;
+                while (exp = Math.pow(10, i), num > exp) {
+                    num = num - exp;
+                    i++;
+                }
+                return this.isNaturalNumber(num);
+            } else {
+                return this.isNaturalNumber(num - 1);
+            }
+        } else {
+            return false;
+        }
+    },
+    isInteger: function isInteger(num) {
+        we.assert.that(typeof num == "number", "num is type number");
+        return this.isNaturalNumber(num) || this.isNaturalNumber(-num);
+    },
+    multiply: function multiply(arr) {
+        we.assert.that(Array.isArray(arr), "arr is an array");
+        if (1 == arr.length) {
+            return arr[0];
+        } else if (0 == arr.length) {
+            return 1;
+        }
+        var half = Math.floor(arr.length / 2);
+        return number.multiply(array.subarray(arr, 0, half)) * number.multiply(array.subarray(arr, half, arr.length));
+    },
+    getFirstFactor: function getFirstFactor(num) {
+        we.assert.that(number.isNaturalNumber(num), "num is a natural number");
+        we.assert.that(num > 0, "num > 0");
+        if (num <= 2) {
+            return num;
+        } else {
+            return getFirstFactorRecursion(num, 2);
+        }
+    },
+    getPrimeFactors: function getPrimeFactors(num) {
+        return getPrimeFactorsRecursion(num, []);
+    }
+};
+var array = {
+    clone: function clone(arr) {
+        we.assert.that(Array.isArray(arr), "arr is an array");
+        return this.subarrayMax(arr, arr.length);
+    },
+    isArraysEqual: function isArraysEqual(arr1, arr2, isEqual) {
+        we.assert.that(Array.isArray(arr1), "arr1 is an array");
+        we.assert.that(Array.isArray(arr2), "arr2 is an array");
+        we.assert.that(typeof isEqual == "function", "isEqual is a function");
+        if (arr1.length != arr2.length) {
+            return false;
+        } else {
+            for (var i = 0; i < arr1.length; i++) {
+                if (!isEqual(arr1[i], arr2[i])) {
+                    return false;
+                }
+            }
+            return true;
+        }
+    },
+    isSorted: function isSorted(arr, upTo, compareFunction) {
+        we.assert.that(number.isInteger(upTo), "upTo is an integer");
+        we.assert.that(Array.isArray(arr), "arr is an array");
+        we.assert.that(typeof compareFunction == "function", "compareFunction is a function");
+        // assume arr is sorted up to index upTo - 1;
+        if (upTo <= 0) {
+            // requires no test
+            return true;
+        } else {
+            // assume arr is sorted up to index upTo - 1;
+            var innerTest = array.isSorted(arr, upTo - 1, compareFunction);
+            if (upTo < arr.length) {
+                return innerTest && compareFunction(arr[upTo - 1], arr[upTo]) <= 0;
+            } else {
+                return innerTest;
+            }
+        }
+    },
+    joinRight: function joinRight(arr, newValue) {
+        we.assert.that(Array.isArray(arr), "arr is an array");
+        return arr.concat([newValue]);
+    },
+    joinLeft: function joinLeft(arr, newValue) {
+        we.assert.that(Array.isArray(arr), "arr is an array");
+        return [newValue].concat(arr);
+    },
+    subarrayMax: function subarrayMax(arr, max) {
+        we.assert.that(number.isInteger(max), "max is an integer");
+        we.assert.that(Array.isArray(arr), "arr is an array");
+        we.assert.that(max >= 0 && max <= arr.length, "max >= 0 && max <= arr.length");
+        if (max <= 0) {
+            // if max is 0, then the subarray includes nothing,
+            // so we return the empty array
+            // this is the base case for mathematical induction
+            return [];
+        } else {
+            // else max > 0.  Assume we have computed 
+            // the subarray for max - 1.  
+            var lesserSubarray = this.subarrayMax(arr, max - 1);
+            // That is the
+            // array containing all the indexes up to
+            // and including max - 2.  To compute the 
+            // desired subarray, we must join that 
+            // array with the next element, if it exists,  
+            // which is arr[max - 1]
+            // if  the index max - 1 is not a valid index for this array, we do nothing
+            // thus we have
+            var subarray = max - 1 < arr.length ? array.joinRight(lesserSubarray, arr[max - 1]) : lesserSubarray;
+            // and by mathematical induction this is the correct 
+            // return array for all 
+            return subarray;
+        }
+    },
+    subarrayMin: function subarrayMin(arr, min) {
+        we.assert.that(number.isInteger(min), "min is an integer");
+        we.assert.that(min >= 0 && min < arr.length + 1, "min >= 0 && min < arr.length + 1");
+        we.assert.that(Array.isArray(arr), "arr is an array");
+        if (min == arr.length) {
+            return [];
+            // If min == arr.length, then there 
+            // are no indexes greater than or equal to min,
+            // so we return an empty array.
+            // This is the base case.
+        } else {
+            // Else assume we have computed the 
+            // correct array for this.subarrayMin(arr, min + 1)
+            var lesserSubarray = this.subarrayMin(arr, min + 1);
+            // then lesserSubarray contains all the values 
+            // from index min + 1 up to the end of arr
+            // if min >= 0 then to get compute subarrayMin(arr, min)
+            // we must join the element at arr[m] to the left of 
+            // lesserSubarray.  Otherwise we simply return lesserSubarray
+            return min >= 0 ? this.joinLeft(lesserSubarray, arr[min]) : lesserSubarray;
+            // We have shown that subarrayMin(arr, min) works when 
+            // min = arr.length;  Let i be an arbitrary index for this
+            // array we have shown that if subarrayMin(arr, i + 1) is
+            // correct then subarrayMin(arr, i)  is correct.
+            // Thus subarrayMin(arr, i) is correct for all valid
+            // indices.
+        }
+    },
+    joinTwoArrays: function joinTwoArrays(arr1, arr2) {
+        we.assert.that(Array.isArray(arr1), "arr1 is an array");
+        we.assert.that(Array.isArray(arr2), "arr2 is an array");
+        return arr1.concat(arr2);
+    },
+    subarray: function subarray(arr, min, max) {
+        // inputs are validated in subarrayMin and subarrayMax
+        return this.subarrayMin(this.subarrayMax(arr, max), min);
+    },
+    replace: function replace(arr, index, value) {
+        we.assert.that(number.isInteger(index), "index is an integer");
+        we.assert.that(Array.isArray(arr), "arr is an array");
+        we.assert.that(index >= 0 && index < arr.length, "index >= 0 && index < arr.length");
+        if (index < 0 || index >= arr.length) {
+            return this.clone(arr);
+        } else {
+            return this.joinTwoArrays(this.joinRight(this.subarrayMax(arr, index), value), this.subarray(arr, index + 1, arr.length));
+        }
+    },
+    swap: function swap(arr, i, j) {
+        we.assert.that(Array.isArray(arr), "arr is an array");
+        we.assert.that(number.isInteger(i), "i is an integer");
+        we.assert.that(0 <= i && i < arr.length, "0 <= i && i < arr.length");
+        we.assert.that(number.isInteger(j), "j is an integer");
+        we.assert.that(0 <= j && j < arr.length, "0 <= j && j < arr.length");
+        return this.replace(this.replace(arr, i, arr[j]), j, arr[i]);
+    },
+    bubbleUp: function bubbleUp(arr, bubbleIndex, compareFunction) {
+        we.assert.that(number.isInteger(bubbleIndex), "bubbleIndex is an integer");
+        we.assert.that(Array.isArray(arr), "arr is an array");
+        we.assert.that(typeof compareFunction == "function", "compareFunction is a function");
+        we.assert.that(bubbleIndex < arr.length && bubbleIndex >= 0, "bubbleIndex < arr.length && bubbleIndex >= 0");
+        if (bubbleIndex == 0) {
+            // the greatest number between index 0 and index 0 (inclusive)
+            // is already in place, so we return a clone of the array
+            return this.clone(arr);
+        } else {
+            // assume we have bubbled up the array so that 
+            // the value at index bubbleIndex - 1 is the max
+            // over all indices between 0 and bubbleIndex - 1, inclusive
+            var lesserBubbledArray = this.bubbleUp(arr, bubbleIndex - 1, compareFunction);
+            var comparison = compareFunction(lesserBubbledArray[bubbleIndex - 1], lesserBubbledArray[bubbleIndex]);
+            if (comparison <= 0) {
+                // then lesserBubbledArray is already bubbled to index bubbleIndex
+                return lesserBubbledArray;
+            } else {
+                // we swap them.  Since lesserBubbledArray[bubbleIndex - 1] is 
+                // greater than everything from 0 to bubbleIndex - 1
+                // and since it is also greater than lesserBubbledArray[bubbleIndex]
+                // if we swap bubbleIndex and bubbleIndex - 1 the result will 
+                // have the largest value among indices [0, bubbleIndex] at index 
+                // bubbleIndex as desired
+                return this.swap(lesserBubbledArray, bubbleIndex - 1, bubbleIndex);
+            }
+        }
+    },
+    bubbleSort: function bubbleSort(arr, compareFunction) {
+        return bubbleSortRecursion(arr, 0, compareFunction);
+    }
+};
+exports["default"] = {
+    array: array,
+    number: number
+};
+
+/***/ }),
+/* 1 */
+/***/ (function(module, exports, __webpack_require__) {
+
+!function(t,n){ true?module.exports=n():undefined}(this,function(){return function(t){var n={};function r(e){if(n[e])return n[e].exports;var i=n[e]={i:e,l:!1,exports:{}};return t[e].call(i.exports,i,i.exports,r),i.l=!0,i.exports}return r.m=t,r.c=n,r.d=function(t,n,e){r.o(t,n)||Object.defineProperty(t,n,{enumerable:!0,get:e})},r.r=function(t){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(t,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(t,"__esModule",{value:!0})},r.t=function(t,n){if(1&n&&(t=r(t)),8&n)return t;if(4&n&&"object"==typeof t&&t&&t.__esModule)return t;var e=Object.create(null);if(r.r(e),Object.defineProperty(e,"default",{enumerable:!0,value:t}),2&n&&"string"!=typeof t)for(var i in t)r.d(e,i,function(n){return t[n]}.bind(null,i));return e},r.n=function(t){var n=t&&t.__esModule?function(){return t.default}:function(){return t};return r.d(n,"a",n),n},r.o=function(t,n){return Object.prototype.hasOwnProperty.call(t,n)},r.p="/",r(r.s=2)}([function(t,n,r){"use strict";const e=r(3),i=r(1);function o(t){let n=[],r=function(t){t&&("negation"!=t.action||"substitution"!=t.args[0].action?"substitution"!=t.action?(r(t.args[0]),r(t.args[1])):n.push(t.args[0]):n.push("!"+t.args[0].args[0]))};return r(t),n}function a(t,n){let r=o(t),e=o(n),a=function(t,n){let r=[];return t.forEach(function(t){let e=t.startsWith("!")?t.substring(1):t,i=t.startsWith("!")?t.substring(1):"!"+t;n.includes(i)&&r.push(e)}),r}(r,e);if(a.length>1)return{action:"literal",args:[!0]};let u=r.concat(e);return u.sort(),0==(u=u.filter(function(t){let n=t.startsWith("!")?t.substring(1):t;return!a.includes(n)}).reduce(function(t,n){return t.peek()==n?t:t.concat([n])},[])).length?{action:"literal",args:[!1]}:i.buildTree(u.join(" | "))}t.exports.prove=function(t,n){let r=[],o=[],u=0;t.forEach(function(t){let n=e.convertToCNF(i.buildTree(t)).map(function(t){return t.idx=u++,t});o=o.concat(n),r.push(o)});let s=u,c=r.map(function(t){let n=t.peek();return n}).map(function(t){let n=e.splitClauses(t.tree).map(function(n){return n.idx=u++,n.from=t.idx,n});return n}).reduce(function(t,n){return t.concat(n)},[]);c.forEach(function(t){o.push({label:"knowledge base clause from "+t.from,tree:t,idx:t.idx})});let f=e.convertToCNF(i.negate(i.buildTree(n)));f.peek().tree;e.splitClauses(f.peek().tree).forEach(function(t){t.idx=u++,c.push(t),o.push({label:"assume for a contradiction",tree:c.peek(),idx:c.peek().idx})});let l=function(t){let n=[t],r=o.filter(function(n){return n.idx==t})[0];return r.req?(r.req.forEach(function(t){n=n.concat(l(t))}),n):n};for(;;){let t=[];for(let n=0;n<c.length;n++)for(let r=1;r<c.length;r++){let e=a(c[n],c[r]);if(!t.map(i.treeToExpr).includes(i.treeToExpr(e))){if(e.idx=u++,o.push({label:"resolve of "+c[n].idx+" and "+c[r].idx,tree:e,idx:e.idx,req:[c[n].idx,c[r].idx]}),"literal"==e.action&&0==e.args[0]){let t=l(e.idx);return o.filter(function(n){return t.includes(n.idx)||n.idx<=s||"sep"==n.label}).map(function(t){return t.tree&&(t.tree=i.treeToExpr(t.tree)),t})}"literal"==e.action&&1==e.args[0]||t.push(e)}}let n=c.map(i.treeToExpr),r=t.map(i.treeToExpr).every(function(t){return n.includes(t)});if(r)return o.push({label:"model exhausted, proof could not be reached"}),o.map(function(t){return t.tree&&(t.tree=i.treeToExpr(t.tree)),t});c=c.concat(t)}},t.exports.addParens=function(t){return i.treeToExpr(i.buildTree(t))},t.exports.isProofComplete=function(t){return"model exhausted, proof could not be reached"!=t.peek().label}},function(t,n,r){"use strict";const e=r(4),i=r(5);function o(t){return t&&"substitution"!=t.action&&"literal"!=t.action?null==t.action?o(t.args[0]):{action:t.action,args:t.args.map(o)}:t}Array.prototype.peek=function(){return this[this.length-1]},Array.prototype.includes||(Array.prototype.includes=function(t){var n=Object(this),r=parseInt(n.length)||0;if(0===r)return!1;var e,i,o=parseInt(arguments[1])||0;for(o>=0?e=o:(e=r+o)<0&&(e=0);e<r;){if(t===(i=n[e])||t!=t&&i!=i)return!0;e++}return!1}),String.prototype.startsWith||(String.prototype.startsWith=function(t,n){return n=n||0,this.indexOf(t,n)===n}),t.exports.negate=function(t){return{action:"negation",args:[t]}},t.exports.treeToExpr=function t(n){if("substitution"==n.action)return n.args[0];if("literal"==n.action)return n.args[0];if("negation"==n.action)return"substitution"==n.args[0].action?"!"+n.args[0].args[0]:"(!"+t(n.args[0])+")";if("conjunction"==n.action)return"("+t(n.args[0])+" & "+t(n.args[1])+")";if("disjunction"==n.action)return"("+t(n.args[0])+" | "+t(n.args[1])+")";if("implication"==n.action)return"("+t(n.args[0])+" -> "+t(n.args[1])+")";if("equivalence"==n.action)return"("+t(n.args[0])+" <-> "+t(n.args[1])+")";return""},t.exports.proofToString=function(t){return(t=t.map(function(t){return"sep"==t.label?"------------------------------\n":t.tree?t.idx+"\t"+t.tree+"\t"+t.label+"\n":t.label+"\n"})).join("")},t.exports.buildTree=function(t){return o(e.parse(i.lex(t)))}},function(t,n,r){"use strict";r.r(n);var e=r(0),i=r.n(e),o={0:"DEBUG",1:"WARN",2:"ERROR"},a=function(t){switch(t){case"DEBUG":return 0;case"WARN":return 1;case"ERROR":return 2}};n.default={build:function(){let t={};var n=function(){};let r=2,e={},u=[];return t.define=function(t){return e[t]},t.assume=function(t){u.push(t)},t.setLevel=function(t){var n=a(t);if(0!=n&&1!=n&&2!=n)throw new Error("we-assert: invalid error level");r=n},t.getLevel=function(){return o[r]},t.checkIsProved=function(t){var n=i.a.prove(u,t);return i.a.isProofComplete(n)},t.getProposition=function(t){return e[t]},t.setHandler=function(t){n=t},t.defineProposition=function(t,n){e[t]=n},t.assert={that:function(t,r){return t||n(r),1==t},proposition:function(n,r){t.defineProposition(n,r);let e=r[0],i=r[1],o=r[2],a=e(...i);return a&&u.push(n),this.that(a,o)},thatIsProved:function(r,e){let i=t.checkIsProved(r);return i||n(e),i},forXBetween:function(t,n){let r={};var e=this.that;return r.that=function(r,i){for(let o=t;o<n;o++)e(r(o),i)},r},atLevel:function(t){var n={},e=this.that;return n.that=function(n,i){a(t)>=r&&e(n,i)},n}},t}}},function(t,n,r){"use strict";const e=r(1);function i(t,n){return{action:"conjunction",args:[t,n]}}function o(t,n){return{action:"implication",args:[t,n]}}function a(t){return{action:"negation",args:[t]}}function u(t,n){return{action:"disjunction",args:[t,n]}}function s(t){return t&&"substitution"!=t.action&&"literal"!=t.action?"equivalence"==t.action?i(o(s(t.args[0]),s(t.args[1])),o(s(t.args[1]),s(t.args[0]))):{action:t.action,args:t.args.map(s)}:t}function c(t){if(!t||"substitution"==t.action||"literal"==t.action)return t;if("negation"==t.action){if("disjunction"==t.args[0].action)return c(i(a(t.args[0].args[0]),a(t.args[0].args[1])));if("conjunction"==t.args[0].action)return c(u(a(t.args[0].args[0]),a(t.args[0].args[1])))}return{action:t.action,args:t.args.map(c)}}function f(t){return t&&"substitution"!=t.action&&"literal"!=t.action?"implication"==t.action?u(a(f(t.args[0])),f(t.args[1])):{action:t.action,args:t.args.map(f)}:t}function l(t){return t&&"substitution"!=t.action&&"literal"!=t.action?"negation"==t.action&&"negation"==t.args[0].action?l(t.args[0].args[0]):{action:t.action,args:t.args.map(l)}:t}function g(t){return JSON.parse(JSON.stringify(t))}function p(t){if(!t||"substitution"==t.action||"literal"==t.action)return t;if("disjunction"==t.action){if("conjunction"==t.args[1].action)return p(i(u(g(t.args[0]),g(t.args[1].args[0])),u(g(t.args[0]),g(t.args[1].args[1]))));if("conjunction"==t.args[0].action)return p(i(u(g(t.args[1]),g(t.args[0].args[0])),u(g(t.args[1]),g(t.args[0].args[1]))))}return{action:t.action,args:t.args.map(p)}}function d(t){if(!t||"substitution"==t.action||"literal"==t.action)return t;if("disjunction"==t.action){var n=t.args[0],r=t.args[1];if("negation"==n.action&&e.treeToExpr(n.args[0])==e.treeToExpr(r))return{action:"literal",args:[!0]};if("negation"==r.action&&e.treeToExpr(r.args[0])==e.treeToExpr(n))return{action:"literal",args:[!0]}}if("conjunction"==t.action){n=t.args[0],r=t.args[1];if("negation"==n.args[0].action&&e.treeToExpr(n.args[0].args[0])==e.treeToExpr(r))return{action:"literal",args:[!1]};if("negation"==r.args[0].action&&e.treeToExpr(r.args[0].args[0])==e.treeToExpr(n))return{action:"literal",args:[!1]}}return{action:t.action,args:t.args.map(d)}}function b(t){if(!t||"substitution"==t.action||"literal"==t.action)return t;if("disjunction"==t.action){var n=t.args[0],r=t.args[1];if("literal"==n.action){if(1==n.args[0])return n;if(0==n.args[0])return r}if("literal"==r.action){if(1==r.args[0])return r;if(0==r.args[0])return n}}if("conjunction"==t.action){n=t.args[0],r=t.args[1];if("literal"==n.action){if(1==n.args[0])return r;if(0==n.args[0])return n}if("literal"==r.action){if(1==r.args[0])return n;if(0==r.args[0])return r}}return{action:t.action,args:t.args.map(b)}}function x(t){var n=function(t){return!(t.args.length<2)&&("implication"!=t.action&&"equivalence"!=t.action&&"disjunction"!=t.action&&(e="conjunction"==t.args[0].action?n(t.args[0]):r(t.args[0]),"conjunction"==t.args[1].action?n(t.args[1])&&e:r(t.args[1])&&e));var e},r=function(t){return!!t&&("substitution"==t.action||"literal"==t.action||"conjunction"!=t.action&&("negation"==t.action?"substitution"==t.args[0].action:"disjunction"==t.action&&r(t.args[0]&&t.args[1])))};return"substitution"==t.action||"negation"==t.action&&"substitution"==t.args[0].action||n(t)}t.exports.convertToCNF=function(t){var n=[{task:"eliminate bijection",f:s},{task:"eliminate implication",f:f},{task:"DeMorgan's",f:c},{task:"eliminate double negation",f:l},{task:"distribute or over and",f:p},{task:"complementation",f:d},{task:"identity",f:b}],r=[{label:"initial expression",tree:t}];for(let t of n){if(x(r.peek().tree))break;for(;;){var i=t.f(r.peek().tree);if(e.treeToExpr(i)==e.treeToExpr(r.peek().tree))break;r.push({label:t.task,tree:i})}}return r},t.exports.isCNF=x,t.exports.splitClauses=function(t){var n=[],r=function(t){if("conjunction"==t.action)return r(t.args[0]),void r(t.args[1]);n.push(t)};return r(t),n}},function(t,n){t.exports.parse=function(t){var n;return function i(o){o=o||null;var a=[];for(;n=t.shift();)if("boundary"==n.type){if("("==n.value)a.push(i());else if(")"==n.value)return r(o,a)}else if("variable"==n.type){if(a.push(r("substitution",[n.value])),e(o))return r(o,a)}else if("operator"==n.type){if(e(n.value)){a.push(i(n.value));continue}if(o){var u=a.slice(0);(a=[]).push(r(o,u))}o=n.value}return r(o,a)}();function r(t,n){return{action:(r=t,{"!":"negation","|":"disjunction","&":"conjunction","->":"implication","<->":"equivalence"},{"!":"negation","|":"disjunction","&":"conjunction","->":"implication","<->":"equivalence"}[r]||r),args:n};var r}function e(t){return"!"===t}}},function(t,n){t.exports.lex=function(t){var n,r=0,e=[],i="";for(;n=t[r++];)if(s(n))-1!==["!","|","&","->","<->"].indexOf(i+=n)&&(o("operator",i),i="");else{if(i.length&&f(i,r-i.length-1),a(n))continue;u(n)?o("variable",n.toUpperCase()):c(n)?o("boundary",n):f(n,r-2)}return e;function o(t,n){e.push({type:t,value:n})}function a(t){return/\s/.test(t)}function u(t){return/[A-Za-z]/.test(t)}function s(t){return/[<>\-|&!]/.test(t)}function c(t){return/[\(\)]/.test(t)}function f(t,n){throw new Error('Unrecognized token "'+t+'" on position '+n+"!")}}}])});
+
+/***/ })
+/******/ ]);
+});
