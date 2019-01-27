@@ -1,6 +1,6 @@
 {
   "name": "xerocross.fu",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "",
   "main": "dist/fu.closed.js",
   "scripts": {
@@ -10,7 +10,7 @@
     "ts-tests": "tsc ./src/functional-utility.test.ts && yarn format",
     "ts-compiled-test": "tsc ./fu.test.ts",
     "build": "yarn ts && yarn format && yarn webpack && yarn close",
-    "format" : "yarn eslint --fix ./src",
+    "format": "yarn eslint --fix ./src",
     "close": "java -jar closure-compiler-v20190121.jar --js ./dist/fu.js --js_output_file ./dist/fu.closed.js",
     "testCompiled": "yarn ts-tests && yarn copyTest && yarn ts-compiled-test && yarn jest ./fu.test.js"
   },
