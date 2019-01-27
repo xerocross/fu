@@ -17,8 +17,12 @@ declare const _default: {
         bubbleSort: (arr: any[], compareFunction: ComparisonFunction) => any[];
     };
     number: {
-        isWholeNumber: (num: number) => boolean;
+        isNaturalNumber: (num: number) => boolean;
         isInteger: (num: number) => boolean;
+        multiply: (arr: number[]) => number;
+        getFirstFactor: (num: number) => number;
+        getPrimeFactorsRecursion: (num: number, knownFactors: number[]) => number[];
+        getPrimeFactors: (num: number) => number[];
     };
 };
 export default _default;

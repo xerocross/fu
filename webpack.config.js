@@ -3,7 +3,7 @@ const webpack = require('webpack')
 
 module.exports = [{
     entry : {
-        'fu' : './src/fu.js'
+        'fu' : './src/functional-utility.js'
     },
     output : {
         globalObject : "this",

@@ -1,13 +1,13 @@
 import WeAssert from "we-assert";
 
 let we = WeAssert.build();
-we.setHandler(function(message:string){
-    throw new Error("the following assertion failed: \"" + message + "\"");
+we.setHandler(function (message:string) {
+    throw new Error(`the following assertion failed: ${message}"`);
 });
 type ComparisonFunction = (i:number, j:number) => number;
 type IsEqualFunction = (left:any, right: any) => boolean;
 
-let bubbleSortRecursion = function(arr:any[], partitionIndex:number, compareFunction:ComparisonFunction ) :any[] {
+let bubbleSortRecursion = function (arr:any[], partitionIndex:number, compareFunction:ComparisonFunction ) :any[] {
     we.assert.that(number.isInteger(partitionIndex), "partitionIndex is an integer");
     we.assert.that(typeof compareFunction == "function", "compareFunction is a function");
     we.assert.that(Array.isArray(arr), "arr is an array");
@@ -26,29 +26,94 @@ let bubbleSortRecursion = function(arr:any[], partitionIndex:number, compareFunc
         return array.bubbleUp(innerArray, partitionIndex, compareFunction);
     }
 }
+let getPrimeFactorsRecursion = function (num:number, knownFactors:number[]) :number[] {
+    we.assert.that(number.isNaturalNumber(num), "num is a natural number");
+    we.assert.that(Array.isArray(knownFactors), "knownFactors is an array");
+    we.assert.that(num > 0, "num > 0");
+    let mult = number.multiply(knownFactors);
+    let returnvalue:number[];
+    if (mult ==  num) {
+        returnvalue = array.clone(knownFactors);
+    } else {
+        let test = num / mult;
+        let factor = number.getFirstFactor(test);
+        returnvalue = getPrimeFactorsRecursion(num, array.joinRight(knownFactors, factor));
+
+    }
+    return returnvalue;
+};
+
+let getFirstFactorRecursion = function (num:number, test:number) :number {
+    if (num % test == 0) {
+        return test;
+    } else {
+        return getFirstFactorRecursion(num, test + 1);
+    }
+}
 
 var number = {
-    isWholeNumber : function(num:number) :boolean {
-        we.assert.that(typeof num == "number", "num is type number")
+    isNaturalNumber : function (num:number) :boolean {
+        we.assert.that(typeof num == "number", "num is type number");
         if (num == 0) {
             return true
-        } else if (num > 0){
-            return this.isWholeNumber(num - 1);
+        } else if (num > 0) {
+            // javascript numbers should be < 9007199254740991
+            we.assert.that(num < 9007199254740991, "num is not larger than 9007199254740991")
+
+            if (num > 100) {
+                let i = 1;
+                let exp;
+                while (exp =  Math.pow(10, i), num > exp) {
+                    num = num - exp;
+                    i++;
+                }
+                return this.isNaturalNumber(num);
+            } else {
+                return this.isNaturalNumber(num - 1);
+            }
         } else {
             return false;
         }
     },
-    isInteger : function(num:number)  :boolean {
+    isInteger : function (num:number)  :boolean {
         we.assert.that(typeof num == "number", "num is type number")
-        return this.isWholeNumber(num) || this.isWholeNumber(-num);
+        return this.isNaturalNumber(num) || this.isNaturalNumber(-num);
+    },
+    multiply : function (arr:number[]) :number {
+        if (arr.length == 0) {
+            return 1;
+        } else {
+            return this.multiply(array.subarrayMax(arr, arr.length - 1)) * arr[arr.length - 1];
+        }
+    },
+    getFirstFactor : function (num:number) {
+        we.assert.that(number.isNaturalNumber(num), "num is a natural number");
+        we.assert.that(num > 0, "num > 0");
+        if (num <= 2) {
+            return num;
+        } else {
+            return getFirstFactorRecursion(num, 2);
+        }
+    },
+    getPrimeFactors : function (num:number) :number[] {
+        return getPrimeFactorsRecursion(num, []);
     }
+    // getNextFactor : function (num:number, knownFactors:number[])  :number {
+    //     we.assert.that(number.isNaturalNumber(num), "num is a natural number");
+    //     we.assert.that(num > 0, "num > 0");
+    //     if (num <= 2) {
+    //         return num;
+    //     } else {
+    //         return num / number.multiply(knownFactors);
+    //     }
+    // }
 }
 var array = {
-    clone : function(arr:any[]) :any[] {
+    clone : function (arr:any[]) :any[] {
         we.assert.that(Array.isArray(arr), "arr is an array");
         return this.subarrayMax(arr, arr.length);
     },
-    isArraysEqual : function(arr1:any[], arr2:any[], isEqual:IsEqualFunction) :boolean {
+    isArraysEqual : function (arr1:any[], arr2:any[], isEqual:IsEqualFunction) :boolean {
         we.assert.that(Array.isArray(arr1), "arr1 is an array");
         we.assert.that(Array.isArray(arr2), "arr2 is an array");
         we.assert.that(typeof isEqual == "function", "isEqual is a function");
@@ -63,7 +128,7 @@ var array = {
             return true;
         }
     },
-    isSorted : function(arr:any[], upTo:number, compareFunction:ComparisonFunction ) :boolean {
+    isSorted : function (arr:any[], upTo:number, compareFunction:ComparisonFunction ) :boolean {
         we.assert.that(number.isInteger(upTo), "upTo is an integer");
         we.assert.that(Array.isArray(arr), "arr is an array");
         we.assert.that(typeof compareFunction == "function", "compareFunction is a function");
@@ -81,17 +146,18 @@ var array = {
             }
         }
     },
-    joinRight : function(arr:any[], newValue:any) :any[]{
+    joinRight : function (arr:any[], newValue:any) :any[] {
         we.assert.that(Array.isArray(arr), "arr is an array");
         return [...arr, newValue];
     },
-    joinLeft : function(arr:any[], newValue:any) :any[] {
+    joinLeft : function (arr:any[], newValue:any) :any[] {
         we.assert.that(Array.isArray(arr), "arr is an array");
         return [newValue, ...arr];
     },
-    subarrayMax : function(arr:any[], max:number) :any[] {
+    subarrayMax : function (arr:any[], max:number) :any[] {
         we.assert.that(number.isInteger(max), "max is an integer");
         we.assert.that(Array.isArray(arr), "arr is an array");
+        we.assert.that(max >= 0 && max <= arr.length, "max >= 0 && max <= arr.length");
         if (max <= 0) {
             // if max is 0, then the subarray includes nothing,
             // so we return the empty array
@@ -115,42 +181,52 @@ var array = {
             return subarray;
         }
     },
-    subarrayMin : function(arr:any[], min:number) :any[] {
+    subarrayMin : function (arr:any[], min:number) :any[] {
         we.assert.that(number.isInteger(min), "min is an integer");
+        we.assert.that(min >= 0 && min < arr.length + 1, "min >= 0 && min < arr.length + 1");
         we.assert.that(Array.isArray(arr), "arr is an array");
-        if (min >= arr.length) {
+
+        if (min == arr.length) {
             return [];
-            // if min >= arr.length, then there 
+            // If min == arr.length, then there 
             // are no indexes greater than or equal to min,
-            // so we return an empty array
+            // so we return an empty array.
+            // This is the base case.
         } else {
-            // else min is a number < arr.length, so the 
-            // result array will contain at least one value
-            // suppose we have computed the appropriate 
-            // lesser subarray for min + 1.
-            let lesserSubarray = this.subarrayMin(arr, min + 1)
-            // if there is a value at arr[min] then we need
-            // to join it to the lesserSubarray on the left
-            // if min is not a valid index then we do nothing
+            // Else assume we have computed the 
+            // correct array for this.subarrayMin(arr, min + 1)
+            let lesserSubarray = this.subarrayMin(arr, min + 1);
+            // then lesserSubarray contains all the values 
+            // from index min + 1 up to the end of arr
+            // if min >= 0 then to get compute subarrayMin(arr, min)
+            // we must join the element at arr[m] to the left of 
+            // lesserSubarray.  Otherwise we simply return lesserSubarray
             return min >= 0 ? this.joinLeft(lesserSubarray, arr[min] ) : lesserSubarray;
+            // We have shown that subarrayMin(arr, min) works when 
+            // min = arr.length;  Let i be an arbitrary index for this
+            // array we have shown that if subarrayMin(arr, i + 1) is
+            // correct then subarrayMin(arr, i)  is correct.
+            // Thus subarrayMin(arr, i) is correct for all valid
+            // indices.
         }
     },
-    joinTwoArrays : function(arr1:any[], arr2:any[]):any[] {
+    joinTwoArrays : function (arr1:any[], arr2:any[]):any[] {
         we.assert.that(Array.isArray(arr1), "arr1 is an array");
         we.assert.that(Array.isArray(arr2), "arr2 is an array");
         return [...arr1, ...arr2];
     },
     subarray : function (arr:any[], min:number, max:number):any[] {
         // inputs are validated in subarrayMin and subarrayMax
-        return this.subarrayMin(this.subarrayMax(arr,max), min);
+        return this.subarrayMin(this.subarrayMax(arr, max), min);
     },
-    replace : function(arr:any[], index:number, value:any):any[] {
+    replace : function (arr:any[], index:number, value:any):any[] {
         we.assert.that(number.isInteger(index), "index is an integer");
         we.assert.that(Array.isArray(arr), "arr is an array");
+        we.assert.that(index >= 0 && index < arr.length, "index >= 0 && index < arr.length");
         if (index < 0 || index >= arr.length) {
             return this.clone(arr);
         } else {
-            return this.joinTwoArrays(this.joinRight(this.subarrayMax(arr,index), value), this.subarray(arr, index + 1, arr.length));
+            return this.joinTwoArrays(this.joinRight(this.subarrayMax(arr, index), value), this.subarray(arr, index + 1, arr.length));
         }
     },
     swap : function (arr:any[], i:number, j:number) {
@@ -161,7 +237,7 @@ var array = {
         we.assert.that(0 <= j && j < arr.length, "0 <= j && j < arr.length");
         return this.replace(this.replace(arr, i, arr[j]), j, arr[i]);
     },
-    bubbleUp : function(arr:any[], bubbleIndex:number, compareFunction:ComparisonFunction) :any[] {
+    bubbleUp : function (arr:any[], bubbleIndex:number, compareFunction:ComparisonFunction) :any[] {
         we.assert.that(number.isInteger(bubbleIndex), "bubbleIndex is an integer");
         we.assert.that(Array.isArray(arr), "arr is an array");
         we.assert.that(typeof compareFunction == "function", "compareFunction is a function");
@@ -191,7 +267,7 @@ var array = {
             }
         }
     },
-    bubbleSort : function(arr:any[], compareFunction:ComparisonFunction) :any[] {
+    bubbleSort : function (arr:any[], compareFunction:ComparisonFunction) :any[] {
         return bubbleSortRecursion(arr, 0, compareFunction);
     }
 };

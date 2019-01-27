@@ -8,6 +8,10 @@ The (possible) lack of speed is a tradeoff for the benefit of functions that can
 
 It's worth noting that the author of this library Adam Cross is a formally trained PhD mathematician.
 
+## about functional programming in JavaScript
+
+JavaScript interpreters tend to have a rather small stack limit for function recursion.  This is an immovable object, and it forces me to write some functions in a style that is fully functional. An important example here is ```number.isNaturalNumber```.  We cannot recurse down from 35802 to check that this is a natural number by recursion.  Instead, I included a small while loop.
+
 ## author
 
 This is a one-man project so far.  I'm the author, Adam Cross, AKA Xerocross.  I'm an experienced software engineer and a PhD mathematician.
@@ -15,6 +19,10 @@ This is a one-man project so far.  I'm the author, Adam Cross, AKA Xerocross.  I
 ## updates
 
 I don't maintain any project-specific  update blog, but I do maintain a blog about all of my programming activities at https://adamcross.blog/.  If you are interested in the dev process or any updates about this project, check the blog.
+
+## development notes
+
+This project uses Google's Closure compiler as a final step.  It's a Java program, so building this project locally requires you to install Java, install the Closure compiler, and wire it up correctly in the package.json scripts.
 
 ## validation and testing
 
@@ -31,9 +39,9 @@ None of these functions mutate the input data.
 Here is the declaration of the exported types and methods
 
 ```
-type ComparisonFunction = (i: number, j: number) => number;
-type IsEqualFunction = (left: any, right: any) => boolean;
-default {
+declare type ComparisonFunction = (i: number, j: number) => number;
+declare type IsEqualFunction = (left: any, right: any) => boolean;
+declare const _default: {
     array: {
         clone: (arr: any[]) => any[];
         isArraysEqual: (arr1: any[], arr2: any[], isEqual: IsEqualFunction) => boolean;
@@ -50,8 +58,12 @@ default {
         bubbleSort: (arr: any[], compareFunction: ComparisonFunction) => any[];
     };
     number: {
-        isWholeNumber: (num: number) => boolean;
+        isNaturalNumber: (num: number) => boolean;
         isInteger: (num: number) => boolean;
+        multiply: (arr: number[]) => number;
+        getFirstFactor: (num: number) => number;
+        getPrimeFactorsRecursion: (num: number, knownFactors: number[]) => number[];
+        getPrimeFactors: (num: number) => number[];
     };
 };
 ```

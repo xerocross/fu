@@ -1,5 +1,5 @@
 //@ts-ignore
-import FU from "./functional-utility";
+import FU from "./dist/fu.closed.js";
 //test
 type ComparisonFunction = (i: number, j:number) => number;
 const isSorted = function (arr:any[], compareFunction:ComparisonFunction ) {
