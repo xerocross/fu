@@ -276,6 +276,195 @@ describe('test array suite', function () {
             }).toThrow();
         });
     });
+    describe("indexOf", function () {
+        let battery = [
+            {
+                array : [3, 4, 5],
+                elt : 4,
+                expected : 1
+            },
+            {
+                array : [],
+                elt : 4,
+                expected : -1
+            },
+            {
+                array : [3, 4, 5, 10, 14],
+                elt : 14,
+                expected : 4
+            },
+            {
+                array : [3, 4, 5, 10, 14],
+                elt : 3,
+                expected : 0
+            },
+            {
+                array : [3, 4, 5, 10, 14],
+                elt : 72,
+                expected : -1
+            }
+        ]
+        for (let i = 0; i < battery.length; i++) {
+            test(`test ${battery[i].array} indexOf ${battery[i].elt}: expect ${battery[i].expected}`, function () {
+                expect(FU.array.indexOf(battery[i].array, battery[i].elt, (x, y)=> x == y)).toBe(battery[i].expected);
+            });
+
+        }
+        
+    });
+
+    describe("indexOf", function () {
+        let battery = [
+            {
+                array1 : [3, 4, 5],
+                array2 : [5, 4, 3],
+                expected : true
+            },
+            {
+                array1 : [],
+                array2 : [],
+                expected : true
+            },
+            {
+                array1 : [3, 4, 7, 2, 85, 24, 2, 895, 234, 36],
+                array2 : [3, 4, 24, 2, 85, 7, 2, 895, 234, 36],
+                expected : true
+            }
+        ]
+        for (let i = 0; i < battery.length; i++) {
+            test(`test ${battery[i].array1} contains the same elements as  ${battery[i].array2}: expect ${battery[i].expected}`, function () {
+                expect(FU.array.containSameElements(battery[i].array1, battery[i].array2, (x, y)=> x == y)).toBe(battery[i].expected);
+            });
+        }
+        
+    });
+    // describe("partition", function () {
+    //     let battery = [
+    //         {
+    //             array : [3, 4, 5, 72, 21, 5, 4, 67],
+    //             index : 4,
+    //             expectedLeft : []
+    //         }
+    //     ]
+    //     for (let i = 0; i < battery.length; i++) {
+    //         test(`test partition ${battery[i].array} against index ${battery[i].index}: expect ${battery[i].expected}`, function () {
+    //             expect(FU.array.contains(battery[i].array, battery[i].elt, (x, y)=> x == y)).toBe(battery[i].expected);
+    //         });
+
+    //     }
+        
+    // });
+    describe("insert", function () {
+        let battery = [
+            {
+                array : [3, 4, 5, 42],
+                elt : {
+                    val : 6,
+                    index : 1
+                },
+                expected : [3, 6, 4, 5, 42]
+            },
+            {
+                array : [3, 4, 5, 42],
+                elt : {
+                    val : 6,
+                    index : 0
+                },
+                expected : [6, 3, 4, 5, 42]
+            },
+            {
+                array : [3, 4, 5, 42],
+                elt : {
+                    val : 6,
+                    index : 3
+                },
+                expected : [3, 4, 5, 6, 42]
+            }
+        ]
+        for (let i = 0; i < battery.length; i++) {
+            test(`test ${battery[i].array} insert ${battery[i].elt.val} at index ${battery[i].elt.index}: expect ${battery[i].expected}`, function () {
+                let res = FU.array.insert(battery[i].array, battery[i].elt.val, battery[i].elt.index);
+                
+                expect(FU.array.isArraysEqual(res, battery[i].expected,  (x, y)=> x == y)).toBe(true);
+            });
+
+        }
+        
+    });
+    describe("validateType", function () {
+        test("valid", function () {
+            expect(FU.array.validateType([2, 5, 8], x => typeof x == "number")).toBe(true);
+        });
+        test("invalid", function () {
+            expect(FU.array.validateType([2, "5", 8], x => typeof x == "number")).toBe(false);
+        });
+    });
+    describe("remove", function () {
+        let battery = [
+            {
+                array : [3, 4, 5, 42],
+                elt : {
+                    index : 1
+                },
+                expected : [3, 5, 42]
+            },
+            {
+                array : [3, 4, 5, 42],
+                elt : {
+                    index : 0
+                },
+                expected : [4, 5, 42]
+            },
+            {
+                array : [3, 4, 5, 42],
+                elt : {
+                    index : 3
+                },
+                expected : [3, 4, 5]
+            }
+        ]
+        for (let i = 0; i < battery.length; i++) {
+            test(`test ${battery[i].array} remove at index ${battery[i].elt.index}: expect ${battery[i].expected}`, function () {
+                let res = FU.array.remove(battery[i].array, battery[i].elt.index);
+                expect(FU.array.isArraysEqual(res, battery[i].expected,  (x, y)=> x == y)).toBe(true);
+            });
+
+        }
+        
+    });
+    describe("mergeSortedArrays", function () {
+        let battery = [
+            {
+                arr1 : [1, 3, 40, 72],
+                arr2 : [2, 6, 19, 20],
+                expected : [1, 2, 3, 6, 19, 20, 40, 72]
+            },
+            {
+                arr1 : [1, 3, 40, 72, 92],
+                arr2 : [2, 6, 19, 20],
+                expected : [1, 2, 3, 6, 19, 20, 40, 72, 92]
+            },
+            {
+                arr1 : [],
+                arr2 : [],
+                expected : []
+            },
+            {
+                arr1 : [1, 3, 40],
+                arr2 : [2, 6, 19, 20],
+                expected : [1, 2, 3, 6, 19, 20, 40]
+            }
+        ]
+        for (let i = 0; i < battery.length; i++) {
+            test(`test ${battery[i].arr1} and ${battery[i].arr2}: expect ${battery[i].expected}`, function () {
+                let res = FU.array.mergeSortedArrays(battery[i].arr1, battery[i].arr2,  (x, y)=> x - y);
+                expect(FU.array.isArraysEqual(res, battery[i].expected,  (x, y)=> x == y)).toBe(true);
+            });
+
+        }
+        
+    });
+
     describe("clone", function () {
         test("valid inupt", function () {
             let arr = [0, 1, 2, 72, 3, 4, 5, 6, 7];
@@ -348,9 +537,6 @@ describe("number function suite", function () {
                 expect(res).toBe(expected);
             });
         }
-
-
-
     });
     describe('getFirstFactor', function () {
         test("valid input 15", function () {

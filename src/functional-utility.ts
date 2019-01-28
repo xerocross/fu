@@ -6,6 +6,7 @@ we.setHandler(function (message:string) {
 });
 type ComparisonFunction = (i:number, j:number) => number;
 type IsEqualFunction = (left:any, right: any) => boolean;
+type validationFunction = (val:any) => boolean;
 
 let bubbleSortRecursion = function (arr:any[], partitionIndex:number, compareFunction:ComparisonFunction ) :any[] {
     we.assert.that(number.isInteger(partitionIndex), "partitionIndex is an integer");
@@ -142,6 +143,45 @@ var array = {
             return true;
         }
     },
+    insert : function (arr:any[], value:any, index:number) {
+        we.assert.that(Array.isArray(arr), "arr is an array");
+        we.assert.that(number.isNaturalNumber(index), "index is a natural number");
+        we.assert.that(index >= 0 && index < arr.length, "index >= 0 && index < arr.length");
+        return this.joinTwoArrays(this.joinRight(this.subarrayMax(arr, index), value), array.subarrayMin(arr, index));
+    },
+    remove : function (arr:any[], index:number) {
+        we.assert.that(Array.isArray(arr), "arr is an array");
+        we.assert.that(number.isNaturalNumber(index), "index is a natural number");
+        we.assert.that(index >= 0 && index < arr.length, "index >= 0 && index < arr.length");
+        return this.joinTwoArrays(this.subarrayMax(arr, index), array.subarrayMin(arr, index + 1));
+    },
+    containSameElements : function (arr1:any[], arr2:any[], isEqual:IsEqualFunction) :boolean {
+        we.assert.that(Array.isArray(arr1), "arr1 is an array");
+        we.assert.that(Array.isArray(arr2), "arr2 is an array");
+        if (arr1.length !==  arr2.length) {
+            return false;
+        } else if (arr1.length == 0 && arr2.length == 0) {
+            return true;
+        }
+        let index;
+        if (index = array.indexOf(arr2, arr1[0], isEqual), index > -1) {
+            return array.containSameElements (this.remove(arr1, 0), this.remove(arr2, index), isEqual);
+        } else {
+            return false;
+        }
+
+    },
+    indexOf : function (arr:any[], elt:any, equalFunction:IsEqualFunction) :number {
+        we.assert.that(Array.isArray(arr), "arr is an array");
+        if (arr.length == 0) {
+            return -1;
+        }
+        if (equalFunction(arr[arr.length - 1], elt)) {
+            return arr.length - 1;
+        } else {
+            return this.indexOf(array.subarrayMax(arr, arr.length - 1), elt, equalFunction);
+        }
+    },
     isSorted : function (arr:any[], upTo:number, compareFunction:ComparisonFunction ) :boolean {
         we.assert.that(number.isInteger(upTo), "upTo is an integer");
         we.assert.that(Array.isArray(arr), "arr is an array");
@@ -158,6 +198,44 @@ var array = {
             } else {
                 return innerTest;
             }
+        }
+    },
+    mergeSortedArrays : function (arr1:any[], arr2:any[], compareFunction:ComparisonFunction ) :any[] {
+        return this.mergeSortedArraysRecursion(arr1, arr2, Math.max(arr1.length, arr2.length), compareFunction);
+    },
+    validateType : function (arr:any[], valFunc: validationFunction) {
+        for (let i = 0; i < arr.length; i++) {
+            if (!valFunc(arr[i])) {
+                return false;
+            }
+        }
+        return true;
+    },
+    mergeSortedArraysRecursion : function (arr1:any[], arr2:any[], index:number, compareFunction:ComparisonFunction ) :any[] {
+        if (index < 0) {
+            return [];
+        } else {
+            let innerArray = this.mergeSortedArraysRecursion(arr1, arr2, index - 1, compareFunction);
+            let len = innerArray.length;
+            let newElements:any[] = [];
+            if (index < arr1.length) {
+                newElements = this.joinRight(newElements, arr1[index]);
+            }
+            if (index < arr2.length) {
+                newElements = this.joinRight(newElements, arr2[index]);
+            }
+            if (newElements.length == 2) {
+                if (compareFunction(newElements[0], newElements[1]) > 0) {
+                    newElements = this.swap(newElements, 0, 1);
+                }
+            }
+            innerArray = array.joinTwoArrays(innerArray, newElements);
+            if (newElements.length > 0) {
+                if (compareFunction(innerArray[len - 1], innerArray[len]) > 0) {
+                    innerArray = this.swap(innerArray, len - 1, len);
+                }
+            }
+            return innerArray;
         }
     },
     joinRight : function (arr:any[], newValue:any) :any[] {
@@ -251,6 +329,12 @@ var array = {
         we.assert.that(0 <= j && j < arr.length, "0 <= j && j < arr.length");
         return this.replace(this.replace(arr, i, arr[j]), j, arr[i]);
     },
+    // qsortRecursion : function (arr:any[], index:number, compareFunction:ComparisonFunction) {
+    //     let val = arr[index];
+    //     let arrayLeft = arr.filter(elt => compareFunction(elt, val) <= 0);
+    //     let arrayRight = arr.filter(elt => compareFunction(elt, val) > 0);
+    //     return this.joinTwoArrays(arrayLeft, arrayRight);
+    // },
     bubbleUp : function (arr:any[], bubbleIndex:number, compareFunction:ComparisonFunction) :any[] {
         we.assert.that(number.isInteger(bubbleIndex), "bubbleIndex is an integer");
         we.assert.that(Array.isArray(arr), "arr is an array");

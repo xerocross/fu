@@ -311,6 +311,212 @@ describe('test array suite', function () {
             }).toThrow();
         });
     });
+    describe("indexOf", function () {
+        var battery = [
+            {
+                array : [3, 4, 5],
+                elt : 4,
+                expected : 1
+            },
+            {
+                array : [],
+                elt : 4,
+                expected : -1
+            },
+            {
+                array : [3, 4, 5, 10, 14],
+                elt : 14,
+                expected : 4
+            },
+            {
+                array : [3, 4, 5, 10, 14],
+                elt : 3,
+                expected : 0
+            },
+            {
+                array : [3, 4, 5, 10, 14],
+                elt : 72,
+                expected : -1
+            }
+        ];
+        var _loop_1 = function (i) {
+            test("test " + battery[i].array + " indexOf " + battery[i].elt + ": expect " + battery[i].expected, function () {
+                expect(functional_utility_1["default"].array.indexOf(battery[i].array, battery[i].elt, function (x, y) {
+                    return x == y; 
+                })).toBe(battery[i].expected);
+            });
+        };
+        for (var i = 0; i < battery.length; i++) {
+            _loop_1(i);
+        }
+    });
+    describe("indexOf", function () {
+        var battery = [
+            {
+                array1 : [3, 4, 5],
+                array2 : [5, 4, 3],
+                expected : true
+            },
+            {
+                array1 : [],
+                array2 : [],
+                expected : true
+            },
+            {
+                array1 : [3, 4, 7, 2, 85, 24, 2, 895, 234, 36],
+                array2 : [3, 4, 24, 2, 85, 7, 2, 895, 234, 36],
+                expected : true
+            }
+        ];
+        var _loop_2 = function (i) {
+            test("test " + battery[i].array1 + " contains the same elements as  " + battery[i].array2 + ": expect " + battery[i].expected, function () {
+                expect(functional_utility_1["default"].array.containSameElements(battery[i].array1, battery[i].array2, function (x, y) {
+                    return x == y; 
+                })).toBe(battery[i].expected);
+            });
+        };
+        for (var i = 0; i < battery.length; i++) {
+            _loop_2(i);
+        }
+    });
+    // describe("partition", function () {
+    //     let battery = [
+    //         {
+    //             array : [3, 4, 5, 72, 21, 5, 4, 67],
+    //             index : 4,
+    //             expectedLeft : []
+    //         }
+    //     ]
+    //     for (let i = 0; i < battery.length; i++) {
+    //         test(`test partition ${battery[i].array} against index ${battery[i].index}: expect ${battery[i].expected}`, function () {
+    //             expect(FU.array.contains(battery[i].array, battery[i].elt, (x, y)=> x == y)).toBe(battery[i].expected);
+    //         });
+    //     }
+    // });
+    describe("insert", function () {
+        var battery = [
+            {
+                array : [3, 4, 5, 42],
+                elt : {
+                    val : 6,
+                    index : 1
+                },
+                expected : [3, 6, 4, 5, 42]
+            },
+            {
+                array : [3, 4, 5, 42],
+                elt : {
+                    val : 6,
+                    index : 0
+                },
+                expected : [6, 3, 4, 5, 42]
+            },
+            {
+                array : [3, 4, 5, 42],
+                elt : {
+                    val : 6,
+                    index : 3
+                },
+                expected : [3, 4, 5, 6, 42]
+            }
+        ];
+        var _loop_3 = function (i) {
+            test("test " + battery[i].array + " insert " + battery[i].elt.val + " at index " + battery[i].elt.index + ": expect " + battery[i].expected, function () {
+                var res = functional_utility_1["default"].array.insert(battery[i].array, battery[i].elt.val, battery[i].elt.index);
+                expect(functional_utility_1["default"].array.isArraysEqual(res, battery[i].expected, function (x, y) {
+                    return x == y; 
+                })).toBe(true);
+            });
+        };
+        for (var i = 0; i < battery.length; i++) {
+            _loop_3(i);
+        }
+    });
+    describe("validateType", function () {
+        test("valid", function () {
+            expect(functional_utility_1["default"].array.validateType([2, 5, 8], function (x) {
+                return typeof x == "number"; 
+            })).toBe(true);
+        });
+        test("invalid", function () {
+            expect(functional_utility_1["default"].array.validateType([2, "5", 8], function (x) {
+                return typeof x == "number"; 
+            })).toBe(false);
+        });
+    });
+    describe("remove", function () {
+        var battery = [
+            {
+                array : [3, 4, 5, 42],
+                elt : {
+                    index : 1
+                },
+                expected : [3, 5, 42]
+            },
+            {
+                array : [3, 4, 5, 42],
+                elt : {
+                    index : 0
+                },
+                expected : [4, 5, 42]
+            },
+            {
+                array : [3, 4, 5, 42],
+                elt : {
+                    index : 3
+                },
+                expected : [3, 4, 5]
+            }
+        ];
+        var _loop_4 = function (i) {
+            test("test " + battery[i].array + " remove at index " + battery[i].elt.index + ": expect " + battery[i].expected, function () {
+                var res = functional_utility_1["default"].array.remove(battery[i].array, battery[i].elt.index);
+                expect(functional_utility_1["default"].array.isArraysEqual(res, battery[i].expected, function (x, y) {
+                    return x == y; 
+                })).toBe(true);
+            });
+        };
+        for (var i = 0; i < battery.length; i++) {
+            _loop_4(i);
+        }
+    });
+    describe("mergeSortedArrays", function () {
+        var battery = [
+            {
+                arr1 : [1, 3, 40, 72],
+                arr2 : [2, 6, 19, 20],
+                expected : [1, 2, 3, 6, 19, 20, 40, 72]
+            },
+            {
+                arr1 : [1, 3, 40, 72, 92],
+                arr2 : [2, 6, 19, 20],
+                expected : [1, 2, 3, 6, 19, 20, 40, 72, 92]
+            },
+            {
+                arr1 : [],
+                arr2 : [],
+                expected : []
+            },
+            {
+                arr1 : [1, 3, 40],
+                arr2 : [2, 6, 19, 20],
+                expected : [1, 2, 3, 6, 19, 20, 40]
+            }
+        ];
+        var _loop_5 = function (i) {
+            test("test " + battery[i].arr1 + " and " + battery[i].arr2 + ": expect " + battery[i].expected, function () {
+                var res = functional_utility_1["default"].array.mergeSortedArrays(battery[i].arr1, battery[i].arr2, function (x, y) {
+                    return x - y; 
+                });
+                expect(functional_utility_1["default"].array.isArraysEqual(res, battery[i].expected, function (x, y) {
+                    return x == y; 
+                })).toBe(true);
+            });
+        };
+        for (var i = 0; i < battery.length; i++) {
+            _loop_5(i);
+        }
+    });
     describe("clone", function () {
         test("valid inupt", function () {
             var arr = [0, 1, 2, 72, 3, 4, 5, 6, 7];
@@ -375,7 +581,7 @@ describe("number function suite", function () {
                 prod : 3 * 3 * 3 * 3 * 3 * 3
             }
         ];
-        var _loop_1 = function (i) {
+        var _loop_6 = function (i) {
             test("valid " + battery[i].array, function () {
                 var res = functional_utility_1["default"].number.multiply(battery[i].array);
                 var expected = battery[i].prod;
@@ -383,7 +589,7 @@ describe("number function suite", function () {
             });
         };
         for (var i = 0; i < battery.length; i++) {
-            _loop_1(i);
+            _loop_6(i);
         }
     });
     describe('getFirstFactor', function () {
@@ -430,7 +636,7 @@ describe("number function suite", function () {
                 factors : [2, 2, 13, 479]
             }
         ];
-        var _loop_2 = function (i) {
+        var _loop_7 = function (i) {
             test("valid " + battery[i].num, function () {
                 var res = functional_utility_1["default"].number.getPrimeFactors(battery[i].num);
                 var expected = battery[i].factors;
@@ -440,7 +646,7 @@ describe("number function suite", function () {
             });
         };
         for (var i = 0; i < battery.length; i++) {
-            _loop_2(i);
+            _loop_7(i);
         }
     });
     describe('sum', function () {
@@ -462,7 +668,7 @@ describe("number function suite", function () {
                 sum : 6
             }
         ];
-        var _loop_3 = function (i) {
+        var _loop_8 = function (i) {
             test("valid " + battery[i].array, function () {
                 var res = functional_utility_1["default"].number.sum(battery[i].array);
                 var expected = battery[i].sum;
@@ -470,7 +676,7 @@ describe("number function suite", function () {
             });
         };
         for (var i = 0; i < battery.length; i++) {
-            _loop_3(i);
+            _loop_8(i);
         }
     });
 });
