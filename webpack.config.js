@@ -1,9 +1,11 @@
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const path = require('path')
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const webpack = require('webpack')
 
 module.exports = [{
     entry : {
-        'fu' : './src/functional-utility.js'
+        'functional-utility' : './src/functional-utility.ts'
     },
     output : {
         globalObject : "this",
@@ -14,14 +16,23 @@ module.exports = [{
         libraryTarget : "umd",
         umdNamedDefine : true
     },
+    resolve : {
+        extensions : ['.ts', '.js']
+    },
     module : {
         rules : [
             {
-                test : /\.m?js$/,
-                exclude : /(node_modules|bower_components)/,
-                use : {
-                    loader : 'babel-loader'
-                }
+                test : /\.ts$/,
+                exclude : [/node_modules/, /src\/.*\.test\.ts$/, /src\/.*\.d\.ts$/],
+                use : [
+                    {
+                        loader : 'babel-loader',
+                        options : {
+                            presets : ['@babel/preset-env']
+                        }
+                    },
+                    'ts-loader'
+                ]
             }
         ]
     },

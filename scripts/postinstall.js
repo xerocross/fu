@@ -1,0 +1,1 @@
+console.log('\x1b[33m%s\x1b[0m', '⚠️ Warning: This version of xerocross.fu throws many warnings about deprecated dependencies based on a dependency we-assert, written by the same author. That package will be updated, and then I will publish a newer version of this package. That will be the next version 2.x');

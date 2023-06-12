@@ -1,6 +1,6 @@
 import WeAssert from "we-assert";
 
-let we = WeAssert.build();
+const we = WeAssert.build();
 we.setHandler(function (message:string) {
     throw new Error(`the following assertion failed: ${message}"`);
 });
@@ -8,7 +8,7 @@ type ComparisonFunction = (i:number, j:number) => number;
 type IsEqualFunction = (left:any, right: any) => boolean;
 type validationFunction = (val:any) => boolean;
 
-let bubbleSortRecursion = function (arr:any[], partitionIndex:number, compareFunction:ComparisonFunction ) :any[] {
+const bubbleSortRecursion = function (arr:any[], partitionIndex:number, compareFunction:ComparisonFunction ) :any[] {
     we.assert.that(number.isInteger(partitionIndex), "partitionIndex is an integer");
     we.assert.that(typeof compareFunction == "function", "compareFunction is a function");
     we.assert.that(Array.isArray(arr), "arr is an array");
@@ -20,31 +20,31 @@ let bubbleSortRecursion = function (arr:any[], partitionIndex:number, compareFun
         // the conditions require no change
         return array.clone(arr);
     } else { 
-        let innerArray = bubbleSortRecursion(arr, partitionIndex + 1, compareFunction);
+        const innerArray = bubbleSortRecursion(arr, partitionIndex + 1, compareFunction);
         // now innerArray is sorted for indices >= partitionIndex + 1;
         // to put the correct value in place at index partitionIndex
         // we just need to bubbleUp at that index
         return array.bubbleUp(innerArray, partitionIndex, compareFunction);
     }
 }
-let getPrimeFactorsRecursion = function (num:number, knownFactors:number[]) :number[] {
+const getPrimeFactorsRecursion = function (num:number, knownFactors:number[]) :number[] {
     we.assert.that(number.isNaturalNumber(num), "num is a natural number");
     we.assert.that(Array.isArray(knownFactors), "knownFactors is an array");
     we.assert.that(num > 0, "num > 0");
-    let mult = number.multiply(knownFactors);
+    const mult = number.multiply(knownFactors);
     let returnvalue:number[];
     if (mult ==  num) {
         returnvalue = array.clone(knownFactors);
     } else {
-        let test = num / mult;
-        let factor = number.getFirstFactor(test);
+        const test = num / mult;
+        const factor = number.getFirstFactor(test);
         returnvalue = getPrimeFactorsRecursion(num, array.joinRight(knownFactors, factor));
 
     }
     return returnvalue;
 };
 
-let getFirstFactorRecursion = function (num:number, test:number) :number {
+const getFirstFactorRecursion = function (num:number, test:number) :number {
     if (num % test == 0) {
         return test;
     } else {
@@ -52,7 +52,7 @@ let getFirstFactorRecursion = function (num:number, test:number) :number {
     }
 }
 
-var number = {
+const number = {
     getInterval : function (min:number, max:number) :number[] {
         we.assert.that(number.isInteger(min), "min is an integer");
         we.assert.that(number.isInteger(max), "max is an integer");
@@ -70,7 +70,7 @@ var number = {
         } else if (0 == arr.length) {
             return 0;
         }
-        let half = Math.floor(arr.length / 2);
+        const half = Math.floor(arr.length / 2);
         return number.sum(array.subarray(arr, 0, half)) + number.sum(array.subarray(arr, half, arr.length))
     },
     isNaturalNumber : function (num:number) :boolean {
@@ -107,7 +107,7 @@ var number = {
         } else if (0 == arr.length) {
             return 1;
         }
-        let half = Math.floor(arr.length / 2);
+        const half = Math.floor(arr.length / 2);
         return number.multiply(array.subarray(arr, 0, half)) * number.multiply(array.subarray(arr, half, arr.length))
     },
     getFirstFactor : function (num:number) {
@@ -123,7 +123,7 @@ var number = {
         return getPrimeFactorsRecursion(num, []);
     }
 }
-var array = {
+const array = {
     clone : function (arr:any[]) :any[] {
         we.assert.that(Array.isArray(arr), "arr is an array");
         return this.subarrayMax(arr, arr.length);
@@ -192,7 +192,7 @@ var array = {
             return true;
         } else {
             // assume arr is sorted up to index upTo - 1;
-            let innerTest = array.isSorted(arr, upTo - 1, compareFunction);
+            const innerTest = array.isSorted(arr, upTo - 1, compareFunction);
             if (upTo < arr.length) {
                 return innerTest && compareFunction(arr[upTo - 1], arr[upTo]) <= 0
             } else {
@@ -216,7 +216,7 @@ var array = {
             return [];
         } else {
             let innerArray = this.mergeSortedArraysRecursion(arr1, arr2, index - 1, compareFunction);
-            let len = innerArray.length;
+            const len = innerArray.length;
             let newElements:any[] = [];
             if (index < arr1.length) {
                 newElements = this.joinRight(newElements, arr1[index]);
@@ -258,7 +258,7 @@ var array = {
         } else {
             // else max > 0.  Assume we have computed 
             // the subarray for max - 1.  
-            let lesserSubarray = this.subarrayMax(arr, max - 1);
+            const lesserSubarray = this.subarrayMax(arr, max - 1);
             // That is the
             // array containing all the indexes up to
             // and including max - 2.  To compute the 
@@ -267,7 +267,7 @@ var array = {
             // which is arr[max - 1]
             // if  the index max - 1 is not a valid index for this array, we do nothing
             // thus we have
-            let subarray = max - 1 < arr.length ? array.joinRight(lesserSubarray, arr[max - 1]) : lesserSubarray;
+            const subarray = max - 1 < arr.length ? array.joinRight(lesserSubarray, arr[max - 1]) : lesserSubarray;
             // and by mathematical induction this is the correct 
             // return array for all 
             return subarray;
@@ -287,7 +287,7 @@ var array = {
         } else {
             // Else assume we have computed the 
             // correct array for this.subarrayMin(arr, min + 1)
-            let lesserSubarray = this.subarrayMin(arr, min + 1);
+            const lesserSubarray = this.subarrayMin(arr, min + 1);
             // then lesserSubarray contains all the values 
             // from index min + 1 up to the end of arr
             // if min >= 0 then to get compute subarrayMin(arr, min)
@@ -349,8 +349,8 @@ var array = {
             // assume we have bubbled up the array so that 
             // the value at index bubbleIndex - 1 is the max
             // over all indices between 0 and bubbleIndex - 1, inclusive
-            let lesserBubbledArray = this.bubbleUp( arr, bubbleIndex - 1, compareFunction);
-            let comparison = compareFunction(lesserBubbledArray[bubbleIndex - 1], lesserBubbledArray[bubbleIndex]);
+            const lesserBubbledArray = this.bubbleUp( arr, bubbleIndex - 1, compareFunction);
+            const comparison = compareFunction(lesserBubbledArray[bubbleIndex - 1], lesserBubbledArray[bubbleIndex]);
             if (comparison <= 0) {
                 // then lesserBubbledArray is already bubbled to index bubbleIndex
                 return lesserBubbledArray;

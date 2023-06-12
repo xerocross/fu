@@ -1,14 +1,17 @@
 {
-    "parser" : "babel-eslint",
-    "plugins": ["jest"],
+    "parser" : "@typescript-eslint/parser",
+    "plugins": ["jest", "@typescript-eslint"],
     "env": {
         "browser" : true,
         "commonjs": true,
         "node": true,
+        "jest": true,
         "jest/globals": true
     },
     "extends": [
-        "eslint:recommended"
+        "eslint:recommended",
+        "plugin:jest/recommended",
+        "plugin:@typescript-eslint/recommended"
     ],
     "rules": {
         "space-before-function-paren": ["error", "always"],
@@ -24,7 +27,8 @@
             "beforeColon": true,
             "afterColon": true,
             "mode": "strict"
-        }]
+        }],
+        "@typescript-eslint/no-explicit-any": "off"
     },
     "globals" : {
         "NODE_ENV" : false,

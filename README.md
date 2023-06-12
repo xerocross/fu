@@ -18,7 +18,7 @@ This is a one-man project so far.  I'm the author, Adam Cross, AKA Xerocross.  I
 
 ## updates
 
-I don't maintain any project-specific  update blog, but I do maintain a blog about all of my programming activities at https://adamcross.blog/.  If you are interested in the dev process or any updates about this project, check the blog.
+I don't maintain any project-specific update blog, but I do maintain a blog about all of my programming activities at https://adamcross.blog/.  If you are interested in the dev process or any updates about this project, check the blog.
 
 ## development notes
 
