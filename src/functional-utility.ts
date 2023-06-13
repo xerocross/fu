@@ -203,7 +203,10 @@ const array = {
     mergeSortedArrays : function (arr1:any[], arr2:any[], compareFunction:ComparisonFunction ) :any[] {
         return this.mergeSortedArraysRecursion(arr1, arr2, Math.max(arr1.length, arr2.length), compareFunction);
     },
-    validateType : function (arr:any[], valFunc: validationFunction) {
+    validateType : () => {
+        throw new Error("method array.validateType has been deprecated");
+    },
+    validateElementType : function (arr:any[], valFunc: validationFunction) {
         for (let i = 0; i < arr.length; i++) {
             if (!valFunc(arr[i])) {
                 return false;
