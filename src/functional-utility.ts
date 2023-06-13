@@ -26,7 +26,7 @@ const bubbleSortRecursion = function (arr:any[], partitionIndex:number, compareF
         // we just need to bubbleUp at that index
         return array.bubbleUp(innerArray, partitionIndex, compareFunction);
     }
-}
+};
 const getPrimeFactorsRecursion = function (num:number, knownFactors:number[]) :number[] {
     we.assert.that(number.isNaturalNumber(num), "num is a natural number");
     we.assert.that(Array.isArray(knownFactors), "knownFactors is an array");
@@ -50,7 +50,7 @@ const getFirstFactorRecursion = function (num:number, test:number) :number {
     } else {
         return getFirstFactorRecursion(num, test + 1);
     }
-}
+};
 
 const number = {
     getInterval : function (min:number, max:number) :number[] {
@@ -66,20 +66,20 @@ const number = {
     sum : function (arr:number[]) :number {
         we.assert.that(Array.isArray(arr), "arr is an array");
         if (1 == arr.length) {
-            return arr[0]
+            return arr[0];
         } else if (0 == arr.length) {
             return 0;
         }
         const half = Math.floor(arr.length / 2);
-        return number.sum(array.subarray(arr, 0, half)) + number.sum(array.subarray(arr, half, arr.length))
+        return number.sum(array.subarray(arr, 0, half)) + number.sum(array.subarray(arr, half, arr.length));
     },
     isNaturalNumber : function (num:number) :boolean {
         we.assert.that(typeof num == "number", "num is type number");
         if (num == 0) {
-            return true
+            return true;
         } else if (num > 0) {
             // javascript numbers should be < 9007199254740991
-            we.assert.that(num < 9007199254740991, "num is not larger than 9007199254740991")
+            we.assert.that(num < 9007199254740991, "num is not larger than 9007199254740991");
 
             if (num > 100) {
                 let i = 1;
@@ -97,18 +97,18 @@ const number = {
         }
     },
     isInteger : function (num:number)  :boolean {
-        we.assert.that(typeof num == "number", "num is type number")
+        we.assert.that(typeof num == "number", "num is type number");
         return this.isNaturalNumber(num) || this.isNaturalNumber(-num);
     },
     multiply : function (arr:number[]) :number {
         we.assert.that(Array.isArray(arr), "arr is an array");
         if (1 == arr.length) {
-            return arr[0]
+            return arr[0];
         } else if (0 == arr.length) {
             return 1;
         }
         const half = Math.floor(arr.length / 2);
-        return number.multiply(array.subarray(arr, 0, half)) * number.multiply(array.subarray(arr, half, arr.length))
+        return number.multiply(array.subarray(arr, 0, half)) * number.multiply(array.subarray(arr, half, arr.length));
     },
     getFirstFactor : function (num:number) {
         we.assert.that(number.isNaturalNumber(num), "num is a natural number");
@@ -122,7 +122,7 @@ const number = {
     getPrimeFactors : function (num:number) :number[] {
         return getPrimeFactorsRecursion(num, []);
     }
-}
+};
 const array = {
     clone : function (arr:any[]) :any[] {
         we.assert.that(Array.isArray(arr), "arr is an array");
@@ -194,7 +194,7 @@ const array = {
             // assume arr is sorted up to index upTo - 1;
             const innerTest = array.isSorted(arr, upTo - 1, compareFunction);
             if (upTo < arr.length) {
-                return innerTest && compareFunction(arr[upTo - 1], arr[upTo]) <= 0
+                return innerTest && compareFunction(arr[upTo - 1], arr[upTo]) <= 0;
             } else {
                 return innerTest;
             }

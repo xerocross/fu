@@ -628,4 +628,4 @@ describe("number function", () => {
             });
         }
     });
-})
+});
