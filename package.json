@@ -6,8 +6,7 @@
   "scripts": {
     "build": "webpack --mode production",
     "format": "npx eslint --fix ./src",
-    "test": "jest ./src/functional-utility.test.ts",
-    "postinstall": "node ./scripts/postinstall.js"
+    "test": "jest ./src/functional-utility.test.ts"
   },
   "keywords": [
     "functional"
@@ -36,6 +35,6 @@
     "webpack-cli": "^5.1.4"
   },
   "dependencies": {
-    "we-assert": "^2.2.0"
+    "we-assert": "^3.0.1"
   }
 }
