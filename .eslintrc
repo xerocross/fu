@@ -28,7 +28,8 @@
             "afterColon": true,
             "mode": "strict"
         }],
-        "@typescript-eslint/no-explicit-any": "off"
+        "@typescript-eslint/no-explicit-any": "off",
+        "semi": ["error", "always"]
     },
     "globals" : {
         "NODE_ENV" : false,
